@@ -7,285 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&family=Caveat:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
-<style>
-:root {
-  --moss: #4a6b3a;
-  --deep-forest: #1a2e12;
-  --mushroom: #c44b4f;
-  --fairy-gold: #d4a843;
-  --lichen: #8fb36a;
-  --night-purple: #2d1b4e;
-  --spore: #e8c86a;
-  --bg: #0d1a08;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-@keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes morphBlob {
-  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-  50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
-  75% { border-radius: 60% 30% 50% 40% / 60% 40% 60% 30%; }
-}
-@keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
-@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
-@keyframes growIn { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
-
-body {
-  background: var(--bg);
-  color: var(--lichen);
-  font-family: 'Pangolin', cursive;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-.bg-gradient {
-  position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse at 30% 70%, rgba(74, 107, 58, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 30%, rgba(45, 27, 78, 0.15) 0%, transparent 60%),
-    linear-gradient(180deg, #0d1a08, #121f0d, #0a1506);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.fireflies {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.firefly {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--spore);
-  box-shadow: 0 0 8px 3px rgba(232, 200, 106, 0.6);
-  animation: pulse 3s ease-in-out infinite, float 8s ease-in-out infinite;
-}
-
-/* Page content */
-.page {
-  position: relative;
-  z-index: 5;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 40px 20px 160px;
-}
-
-/* Back link */
-.back-link {
-  display: inline-block;
-  font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
-  color: var(--lichen);
-  text-decoration: none;
-  opacity: 0.5;
-  transition: opacity 0.3s, transform 0.3s;
-  margin-bottom: 40px;
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.back-link:hover {
-  opacity: 1;
-  transform: translateX(-5px);
-}
-
-/* Page title */
-.page-title {
-  font-family: 'Indie Flower', cursive;
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  color: var(--spore);
-  text-align: center;
-  margin-bottom: 10px;
-  animation: fadeInUp 1s ease-out;
-  text-shadow: 0 0 40px rgba(232, 200, 106, 0.2);
-}
-
-.page-subtitle {
-  font-family: 'Caveat', cursive;
-  font-size: 1.1rem;
-  color: rgba(143, 179, 106, 0.4);
-  text-align: center;
-  margin-bottom: 60px;
-  animation: fadeInUp 1.2s ease-out;
-}
-
-/* Concert card */
-.concert-card {
-  position: relative;
-  padding: 30px 35px;
-  margin-bottom: 35px;
-  background: rgba(26, 46, 18, 0.5);
-  backdrop-filter: blur(4px);
-  transition: transform 0.3s, background 0.3s;
-  animation: fadeInUp 1s ease-out;
-  animation-fill-mode: backwards;
-  transform-origin: bottom center;
-}
-
-.concert-card:hover {
-  transform: scale(1.02);
-  background: rgba(26, 46, 18, 0.7);
-}
-
-.concert-card-border {
-  position: absolute;
-  inset: 0;
-  border: 1.5px solid rgba(143, 179, 106, 0.2);
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  animation: morphBlob 10s ease-in-out infinite;
-  pointer-events: none;
-  transition: border-color 0.3s;
-}
-
-.concert-card:hover .concert-card-border {
-  border-color: rgba(212, 168, 67, 0.4);
-}
-
-.concert-card.past {
-  opacity: 0.35;
-}
-
-.concert-card.past:hover {
-  opacity: 0.5;
-}
-
-.concert-card.next {
-  background: rgba(74, 107, 58, 0.15);
-}
-
-.concert-card.next .concert-card-border {
-  border-color: rgba(212, 168, 67, 0.4);
-}
-
-.next-badge {
-  display: inline-block;
-  font-family: 'Caveat', cursive;
-  font-size: 0.85rem;
-  color: var(--fairy-gold);
-  border: 1px solid rgba(212, 168, 67, 0.3);
-  padding: 2px 12px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  animation: breathe 3s ease-in-out infinite;
-}
-
-.card-date {
-  font-family: 'Caveat', cursive;
-  font-size: clamp(1.3rem, 3.5vw, 1.6rem);
-  color: var(--spore);
-  margin-bottom: 4px;
-}
-
-.card-title {
-  font-family: 'Indie Flower', cursive;
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  color: var(--lichen);
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-
-.card-venue {
-  font-family: 'Pangolin', cursive;
-  font-size: 1rem;
-  color: rgba(143, 179, 106, 0.6);
-  margin-bottom: 4px;
-}
-
-.card-meta {
-  font-family: 'Caveat', cursive;
-  font-size: 0.95rem;
-  color: rgba(143, 179, 106, 0.4);
-  margin-top: 10px;
-}
-
-.card-meta span {
-  margin-right: 15px;
-}
-
-.card-bands {
-  font-family: 'Pangolin', cursive;
-  font-size: 0.9rem;
-  color: rgba(196, 75, 79, 0.6);
-  margin-top: 6px;
-}
-
-.card-link {
-  display: inline-block;
-  margin-top: 12px;
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  color: var(--fairy-gold);
-  text-decoration: none;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.card-link:hover { opacity: 1; }
-
-/* Decorative dividers between cards */
-.card-divider {
-  text-align: center;
-  margin: 10px 0;
-  opacity: 0.2;
-}
-
-/* Section labels */
-.section-label {
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  color: rgba(143, 179, 106, 0.3);
-  text-transform: lowercase;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-  margin-top: 40px;
-  text-align: center;
-  animation: fadeInUp 1.2s ease-out;
-}
-
-/* Decorative vine between sections */
-.section-vine {
-  text-align: center;
-  margin: 30px 0;
-  opacity: 0.25;
-}
-
-/* Empty state */
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  animation: fadeInUp 1.2s ease-out;
-}
-
-.empty-state p {
-  font-family: 'Caveat', cursive;
-  font-size: 1.3rem;
-  color: rgba(143, 179, 106, 0.4);
-}
-
-/* Bottom mushroom */
-.mushroom-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  pointer-events: none;
-  z-index: 3;
-}
-
-@media (max-width: 600px) {
-  .concert-card { padding: 22px 20px; }
-  .page { padding: 30px 15px 140px; }
-}
-</style>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="concerts.css">
 </head>
 <body>
 
@@ -294,50 +17,132 @@ body {
 
 <div class="page">
   <a href="index.html" class="back-link">← zpět do lesa</a>
-  
+
   <h1 class="page-title">koncerty</h1>
   <p class="page-subtitle">~ kde nás potkáte ~</p>
 
   <div id="concertList"></div>
+
+  <div class="footer-credit">
+    <p>vytvořil <a href="https://vincentsmid.xyz" target="_blank">vincent šmíd</a></p>
+  </div>
 </div>
 
-<!-- Bottom mushrooms -->
+<!-- Bottom mushrooms — trippy -->
 <div class="mushroom-footer">
   <svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;bottom:0">
-    <path d="M0 70 Q200 55 400 68 Q600 80 800 60 Q1000 50 1200 65 L1200 100 L0 100Z" fill="#1a2e12" opacity="0.8"/>
-    <path d="M0 85 Q300 75 600 82 Q900 90 1200 80 L1200 100 L0 100Z" fill="#0d1a08"/>
-    <g transform="translate(200, 42)" opacity="0.5">
-      <rect x="8" y="10" width="4" height="18" rx="2" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="10" cy="10" rx="13" ry="9" fill="#c44b4f" opacity="0.6"/>
-      <circle cx="6" cy="8" r="1.5" fill="#fff" opacity="0.3"/>
+    <defs>
+      <linearGradient id="trippyGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#ff6ef0" stop-opacity="0.6"/>
+        <stop offset="50%" stop-color="#00ffe0" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#ffaa30" stop-opacity="0.6"/>
+      </linearGradient>
+      <linearGradient id="trippyGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#6a3db8" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#2a1845" stop-opacity="0.9"/>
+      </linearGradient>
+      <radialGradient id="mushroomGlow" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="#ff6ef0" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#c44b4f" stop-opacity="0.3"/>
+      </radialGradient>
+      <filter id="tripGlow">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <path d="M0 70 Q200 55 400 68 Q600 80 800 60 Q1000 50 1200 65 L1200 100 L0 100Z" fill="#3a2560" opacity="0.7"/>
+    <path d="M0 85 Q300 75 600 82 Q900 90 1200 80 L1200 100 L0 100Z" fill="#2a1845"/>
+    <!-- Mushroom 1 — warped -->
+    <g transform="translate(180, 38)" filter="url(#tripGlow)">
+      <rect x="7" y="12" width="5" height="20" rx="2.5" fill="#b8e090" opacity="0.5">
+        <animateTransform attributeName="transform" type="skewX" values="0;5;-3;0" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="10" cy="11" rx="15" ry="10" fill="url(#mushroomGlow)">
+        <animate attributeName="rx" values="15;17;13;15" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="10;8;12;10" dur="7s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="6" cy="8" r="2" fill="#00ffe0" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.8;0.2;0.4" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="14" cy="6" r="1.5" fill="#ffaa30" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.7;0.1;0.3" dur="4s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <g transform="translate(600, 35)" opacity="0.5">
-      <rect x="10" y="12" width="5" height="22" rx="2.5" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="12.5" cy="12" rx="16" ry="11" fill="#c44b4f" opacity="0.6"/>
-      <circle cx="8" cy="9" r="2" fill="#fff" opacity="0.3"/>
-      <circle cx="16" cy="7" r="1.5" fill="#fff" opacity="0.3"/>
+    <!-- Mushroom 2 — big & pulsing -->
+    <g transform="translate(550, 30)" filter="url(#tripGlow)">
+      <rect x="10" y="14" width="6" height="25" rx="3" fill="#b8e090" opacity="0.5">
+        <animateTransform attributeName="transform" type="skewX" values="0;-4;6;0" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="13" cy="13" rx="20" ry="13" fill="url(#mushroomGlow)">
+        <animate attributeName="rx" values="20;23;18;20" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="13;10;15;13" dur="6s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="7" cy="9" r="2.5" fill="#ff6ef0" opacity="0.3">
+        <animate attributeName="r" values="2.5;3.5;2;2.5" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="18" cy="7" r="2" fill="#00ffe0" opacity="0.3">
+        <animate attributeName="r" values="2;3;1.5;2" dur="4.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="12" cy="5" r="1.5" fill="#ffaa30" opacity="0.25">
+        <animate attributeName="opacity" values="0.25;0.6;0.1;0.25" dur="5s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <g transform="translate(900, 40)" opacity="0.5">
-      <rect x="7" y="9" width="3" height="16" rx="1.5" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="8.5" cy="9" rx="11" ry="8" fill="#d4a843" opacity="0.4"/>
+    <!-- Mushroom 3 — golden wobbly -->
+    <g transform="translate(880, 36)" filter="url(#tripGlow)">
+      <rect x="7" y="10" width="4" height="18" rx="2" fill="#b8e090" opacity="0.5">
+        <animateTransform attributeName="transform" type="skewX" values="0;3;-5;0" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="9" cy="10" rx="13" ry="9" fill="#ffaa30" opacity="0.35">
+        <animate attributeName="rx" values="13;15;11;13" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="9;7;11;9" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="5" cy="7" r="1.5" fill="#ff6ef0" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.7;0.15;0.3" dur="3s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <g stroke="#4a6b3a" fill="none" stroke-width="1.5" opacity="0.4">
-      <path d="M350 68 Q352 50 348 38"/><path d="M355 68 Q360 45 355 33"/>
-      <path d="M800 60 Q802 42 798 30"/><path d="M805 60 Q810 37 805 25"/>
+    <!-- Trippy vines -->
+    <g stroke="url(#trippyGrad1)" fill="none" stroke-width="1.5" opacity="0.5">
+      <path d="M340 68 Q345 48 338 32 Q334 20 340 10">
+        <animate attributeName="d" values="M340 68 Q345 48 338 32 Q334 20 340 10;M340 68 Q350 45 342 28 Q338 18 345 8;M340 68 Q345 48 338 32 Q334 20 340 10" dur="8s" repeatCount="indefinite"/>
+      </path>
+      <path d="M348 68 Q355 42 350 28 Q346 16 352 5">
+        <animate attributeName="d" values="M348 68 Q355 42 350 28 Q346 16 352 5;M348 68 Q360 38 353 22 Q350 14 356 3;M348 68 Q355 42 350 28 Q346 16 352 5" dur="7s" repeatCount="indefinite"/>
+      </path>
+      <path d="M780 60 Q784 40 778 25 Q774 14 780 5">
+        <animate attributeName="d" values="M780 60 Q784 40 778 25 Q774 14 780 5;M780 60 Q790 36 782 20 Q778 12 785 3;M780 60 Q784 40 778 25 Q774 14 780 5" dur="9s" repeatCount="indefinite"/>
+      </path>
     </g>
+    <!-- Floating spore particles -->
+    <circle cx="100" cy="55" r="1.5" fill="#ff6ef0" opacity="0.3">
+      <animate attributeName="cy" values="55;35;55" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="60" r="1" fill="#00ffe0" opacity="0.3">
+      <animate attributeName="cy" values="60;38;60" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="700" cy="50" r="1.5" fill="#ffaa30" opacity="0.25">
+      <animate attributeName="cy" values="50;28;50" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.25;0.6;0.25" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1050" cy="58" r="1" fill="#ff6ef0" opacity="0.3">
+      <animate attributeName="cy" values="58;40;58" dur="5s" repeatCount="indefinite"/>
+    </circle>
   </svg>
 </div>
 
 <script>
-// Fireflies
+// Fireflies — with color variety
 const ff = document.getElementById('fireflies');
-for (let i = 0; i < 18; i++) {
+const fireflyColors = ['#ff6ef0', '#00ffe0', '#ffaa30', '#f5e080', '#b8e090'];
+for (let i = 0; i < 24; i++) {
   const f = document.createElement('div');
   f.className = 'firefly';
   f.style.left = Math.random() * 100 + '%';
   f.style.top = Math.random() * 100 + '%';
   f.style.animationDelay = Math.random() * 5 + 's';
-  f.style.animationDuration = (3 + Math.random() * 4) + 's, ' + (6 + Math.random() * 6) + 's';
+  f.style.animationDuration = (3 + Math.random() * 4) + 's, ' + (6 + Math.random() * 6) + 's, ' + (3 + Math.random() * 3) + 's';
+  f.style.background = fireflyColors[Math.floor(Math.random() * fireflyColors.length)];
   ff.appendChild(f);
 }
 
@@ -361,11 +166,11 @@ async function loadConcerts() {
 function parseConcerts(md) {
   const concerts = [];
   const blocks = md.split(/^---$/m).filter(b => b.trim());
-  
+
   for (const block of blocks) {
     const concert = {};
     const lines = block.trim().split('\n');
-    
+
     for (const line of lines) {
       const match = line.match(/^(\w+):\s*(.+)$/);
       if (match) {
@@ -381,17 +186,17 @@ function parseConcerts(md) {
         else if (key === 'link' || key === 'odkaz') concert.link = val;
       }
     }
-    
+
     if (concert.date && concert.title) concerts.push(concert);
   }
-  
+
   concerts.sort((a, b) => a.date - b.date);
   return concerts;
 }
 
 function formatDate(d) {
   const days = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
-  const months = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 
+  const months = ['ledna', 'února', 'března', 'dubna', 'května', 'června',
                   'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
   return `${days[d.getDay()]} ${d.getDate()}. ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
@@ -399,15 +204,14 @@ function formatDate(d) {
 function renderConcerts(concerts) {
   const container = document.getElementById('concertList');
   const now = new Date();
-  
+
   const upcoming = concerts.filter(c => c.date >= now);
   const past = concerts.filter(c => c.date < now).reverse();
-  
+
   let html = '';
-  
-  // Find the next concert
+
   const nextIdx = upcoming.length > 0 ? 0 : -1;
-  
+
   if (upcoming.length > 0) {
     html += '<div class="section-label">~ nadcházející ~</div>';
     upcoming.forEach((c, i) => {
@@ -416,29 +220,64 @@ function renderConcerts(concerts) {
       html += renderCard(c, isNext, false, delay);
       if (i < upcoming.length - 1) {
         html += `<div class="card-divider">
-          <svg width="40" height="20" viewBox="0 0 40 20"><path d="M5 10 Q20 2 35 10" fill="none" stroke="#8fb36a" stroke-width="1"/><circle cx="20" cy="6" r="2" fill="#4a6b3a"/></svg>
+          <svg width="60" height="30" viewBox="0 0 60 30">
+            <path d="M5 15 Q15 3 30 15 Q45 27 55 15" fill="none" stroke="#ff6ef0" stroke-width="1" opacity="0.5">
+              <animate attributeName="d" values="M5 15 Q15 3 30 15 Q45 27 55 15;M5 15 Q15 27 30 15 Q45 3 55 15;M5 15 Q15 3 30 15 Q45 27 55 15" dur="4s" repeatCount="indefinite"/>
+            </path>
+            <circle cx="30" cy="15" r="3" fill="none" stroke="#00ffe0" stroke-width="0.8" opacity="0.5">
+              <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0.2;0.5" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="30" cy="15" r="1.5" fill="#ffaa30" opacity="0.4">
+              <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
         </div>`;
       }
     });
   } else {
     html += `<div class="empty-state">
-      <svg width="60" height="60" viewBox="0 0 60 60" style="opacity:0.3; margin-bottom:20px;">
-        <circle cx="30" cy="30" r="25" fill="none" stroke="#8fb36a" stroke-width="1"/>
-        <path d="M20 35 Q30 28 40 35" fill="none" stroke="#8fb36a" stroke-width="1.5"/>
-        <circle cx="22" cy="24" r="2" fill="#8fb36a"/>
-        <circle cx="38" cy="24" r="2" fill="#8fb36a"/>
+      <svg width="80" height="80" viewBox="0 0 80 80" style="opacity:0.4; margin-bottom:20px;">
+        <circle cx="40" cy="40" r="30" fill="none" stroke="#ff6ef0" stroke-width="1">
+          <animate attributeName="r" values="30;33;28;30" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="40" cy="40" r="20" fill="none" stroke="#00ffe0" stroke-width="0.5" opacity="0.4">
+          <animate attributeName="r" values="20;24;18;20" dur="7s" repeatCount="indefinite"/>
+        </circle>
+        <path d="M25 48 Q40 40 55 48" fill="none" stroke="#b8e090" stroke-width="1.5">
+          <animate attributeName="d" values="M25 48 Q40 40 55 48;M25 48 Q40 36 55 48;M25 48 Q40 40 55 48" dur="4s" repeatCount="indefinite"/>
+        </path>
+        <circle cx="28" cy="32" r="3" fill="#ffaa30" opacity="0.5">
+          <animate attributeName="r" values="3;4;2;3" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="52" cy="32" r="3" fill="#ff6ef0" opacity="0.5">
+          <animate attributeName="r" values="3;2;4;3" dur="3.5s" repeatCount="indefinite"/>
+        </circle>
       </svg>
       <p>zatím žádné koncerty v plánu</p>
       <p style="margin-top: 8px; font-size: 1rem;">ale něco roste...</p>
     </div>`;
   }
-  
+
   if (past.length > 0) {
     html += `
       <div class="section-vine">
-        <svg width="120" height="40" viewBox="0 0 120 40">
-          <path d="M10 20 Q30 5 60 20 Q90 35 110 20" fill="none" stroke="#4a6b3a" stroke-width="1"/>
-          <circle cx="60" cy="20" r="3" fill="#4a6b3a" opacity="0.5"/>
+        <svg width="140" height="50" viewBox="0 0 140 50">
+          <path d="M10 25 Q35 5 70 25 Q105 45 130 25" fill="none" stroke="#6a3db8" stroke-width="1.5" opacity="0.6">
+            <animate attributeName="d" values="M10 25 Q35 5 70 25 Q105 45 130 25;M10 25 Q35 45 70 25 Q105 5 130 25;M10 25 Q35 5 70 25 Q105 45 130 25" dur="6s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="70" cy="25" r="4" fill="none" stroke="#ff6ef0" stroke-width="0.8" opacity="0.4">
+            <animate attributeName="r" values="4;7;4" dur="4s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="70" cy="25" r="2" fill="#00ffe0" opacity="0.3">
+            <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="40" cy="15" r="1.5" fill="#ffaa30" opacity="0.3">
+            <animate attributeName="cy" values="15;10;15" dur="5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="100" cy="35" r="1.5" fill="#ff6ef0" opacity="0.3">
+            <animate attributeName="cy" values="35;40;35" dur="4s" repeatCount="indefinite"/>
+          </circle>
         </svg>
       </div>
       <div class="section-label">~ proběhlo ~</div>
@@ -448,7 +287,7 @@ function renderConcerts(concerts) {
       html += renderCard(c, false, true, delay);
     });
   }
-  
+
   container.innerHTML = html;
 }
 
@@ -456,11 +295,11 @@ function renderCard(concert, isNext, isPast, delay) {
   const classes = ['concert-card'];
   if (isNext) classes.push('next');
   if (isPast) classes.push('past');
-  
+
   let meta = '';
   if (concert.time) meta += `<span>⏰ ${concert.time}</span>`;
   if (concert.price) meta += `<span>🍄 ${concert.price}</span>`;
-  
+
   return `
     <div class="${classes.join(' ')}" style="animation-delay: ${delay}s">
       <div class="concert-card-border" style="animation-delay: ${Math.random() * 5}s"></div>

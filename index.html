@@ -7,410 +7,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&family=Silkscreen&family=Caveat:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
-<style>
-:root {
-  --moss: #4a6b3a;
-  --deep-forest: #1a2e12;
-  --mushroom: #c44b4f;
-  --fairy-gold: #d4a843;
-  --lichen: #8fb36a;
-  --night-purple: #2d1b4e;
-  --spore: #e8c86a;
-  --bg: #0d1a08;
-  --mist: rgba(141, 179, 106, 0.08);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-@keyframes sway {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
-}
-@keyframes swayReverse {
-  0%, 100% { transform: rotate(3deg); }
-  50% { transform: rotate(-3deg); }
-}
-@keyframes grow {
-  0% { transform: scaleY(0); opacity: 0; }
-  100% { transform: scaleY(1); opacity: 1; }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-15px) rotate(2deg); }
-  66% { transform: translateY(-8px) rotate(-1deg); }
-}
-@keyframes pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.3); }
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes psychSwirl {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
-}
-@keyframes breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-@keyframes drip {
-  0% { transform: translateY(-10px); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-@keyframes spiralSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@keyframes eyeOpen {
-  0%, 40%, 100% { transform: scaleY(1); }
-  45%, 55% { transform: scaleY(0.1); }
-}
-@keyframes morphBlob {
-  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-  50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
-  75% { border-radius: 60% 30% 50% 40% / 60% 40% 60% 30%; }
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--bg);
-  color: var(--lichen);
-  font-family: 'Pangolin', cursive;
-  overflow-x: hidden;
-  min-height: 100vh;
-  position: relative;
-}
-
-/* === BACKGROUND LAYERS === */
-.bg-layer {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.bg-gradient {
-  background: 
-    radial-gradient(ellipse at 20% 80%, rgba(74, 107, 58, 0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(45, 27, 78, 0.2) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 50%, rgba(196, 75, 79, 0.05) 0%, transparent 40%),
-    linear-gradient(180deg, #0d1a08 0%, #121f0d 50%, #0a1506 100%);
-}
-
-.fireflies {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.firefly {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--spore);
-  box-shadow: 0 0 8px 3px rgba(232, 200, 106, 0.6), 0 0 20px 6px rgba(232, 200, 106, 0.2);
-  animation: pulse 3s ease-in-out infinite, float 8s ease-in-out infinite;
-}
-
-/* === SVG DECORATIONS === */
-.vine-container {
-  position: fixed;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.vine-left {
-  left: -20px;
-  top: 0;
-  width: 200px;
-  height: 100vh;
-  animation: sway 8s ease-in-out infinite;
-  transform-origin: top center;
-}
-
-.vine-right {
-  right: -20px;
-  top: 0;
-  width: 200px;
-  height: 100vh;
-  animation: swayReverse 9s ease-in-out infinite;
-  transform-origin: top center;
-}
-
-/* === MAIN CONTENT === */
-.main-content {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 40px 20px;
-}
-
-/* === LOGO === */
-.logo-wrapper {
-  margin-top: 60px;
-  margin-bottom: 20px;
-  animation: fadeInUp 1.5s ease-out, breathe 6s ease-in-out infinite;
-  position: relative;
-}
-
-.logo-wrapper img {
-  max-width: min(500px, 85vw);
-  height: auto;
-  filter: brightness(1.1) contrast(1.05);
-  /* tint the logo to match the green theme */
-}
-
-.logo-glow {
-  position: absolute;
-  inset: -40px;
-  background: radial-gradient(ellipse, rgba(143, 179, 106, 0.15) 0%, transparent 70%);
-  z-index: -1;
-  animation: breathe 4s ease-in-out infinite;
-}
-
-/* === TAGLINE === */
-.tagline {
-  font-family: 'Caveat', cursive;
-  font-size: clamp(1rem, 3vw, 1.4rem);
-  color: rgba(143, 179, 106, 0.5);
-  letter-spacing: 3px;
-  margin-bottom: 60px;
-  animation: fadeInUp 1.8s ease-out;
-  text-transform: lowercase;
-}
-
-/* === NEXT CONCERT BLOCK === */
-.next-concert {
-  animation: fadeInUp 2s ease-out;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none;
-  display: block;
-  padding: 40px 50px;
-  position: relative;
-  transition: transform 0.3s ease;
-  max-width: 600px;
-}
-
-.next-concert:hover {
-  transform: scale(1.03);
-}
-
-.next-concert:hover .concert-border {
-  animation: morphBlob 4s ease-in-out infinite, psychSwirl 6s linear infinite;
-}
-
-.concert-border {
-  position: absolute;
-  inset: 0;
-  border: 2px solid var(--lichen);
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  animation: morphBlob 8s ease-in-out infinite;
-  opacity: 0.5;
-  transition: opacity 0.3s;
-}
-
-.next-concert:hover .concert-border {
-  opacity: 1;
-}
-
-.concert-label {
-  font-family: 'Caveat', cursive;
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-  color: var(--fairy-gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  opacity: 0.7;
-}
-
-.concert-title {
-  font-family: 'Indie Flower', cursive;
-  font-size: clamp(1.8rem, 5vw, 3rem);
-  color: var(--spore);
-  line-height: 1.2;
-  margin-bottom: 8px;
-  text-shadow: 0 0 30px rgba(232, 200, 106, 0.3);
-}
-
-.concert-date {
-  font-family: 'Caveat', cursive;
-  font-size: clamp(1.3rem, 4vw, 2rem);
-  color: var(--lichen);
-  margin-bottom: 6px;
-}
-
-.concert-venue {
-  font-family: 'Pangolin', cursive;
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-  color: rgba(143, 179, 106, 0.6);
-}
-
-.concert-cta {
-  margin-top: 20px;
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  color: var(--mushroom);
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.next-concert:hover .concert-cta {
-  opacity: 1;
-}
-
-/* === BOTTOM MUSHROOM GARDEN === */
-.mushroom-garden {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  pointer-events: none;
-  z-index: 3;
-}
-
-/* === NAVIGATION === */
-.nav-links {
-  margin-top: 80px;
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
-  animation: fadeInUp 2.5s ease-out;
-}
-
-.nav-links a {
-  font-family: 'Indie Flower', cursive;
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
-  color: var(--lichen);
-  text-decoration: none;
-  position: relative;
-  padding: 8px 16px;
-  transition: color 0.3s, transform 0.3s;
-}
-
-.nav-links a::after {
-  content: '~';
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  color: var(--fairy-gold);
-  font-size: 1.5rem;
-  transition: transform 0.3s;
-}
-
-.nav-links a:hover {
-  color: var(--spore);
-  transform: translateY(-3px);
-}
-
-.nav-links a:hover::after {
-  transform: translateX(-50%) scaleX(1);
-}
-
-/* === DRIPPING === */
-.drip {
-  position: fixed;
-  width: 3px;
-  height: 20px;
-  background: linear-gradient(to bottom, transparent, var(--lichen), transparent);
-  border-radius: 50%;
-  opacity: 0.3;
-  animation: drip 6s linear infinite;
-  z-index: 1;
-}
-
-/* === SPIRAL EYES === */
-.third-eye {
-  position: fixed;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.12;
-}
-
-.third-eye svg {
-  animation: spiralSpin 20s linear infinite;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 600px) {
-  .vine-left, .vine-right { width: 100px; }
-  .main-content { padding: 20px 15px; }
-  .logo-wrapper { margin-top: 40px; }
-  .next-concert { padding: 30px 25px; }
-  .nav-links { gap: 15px; }
-}
-
-/* === LOADING === */
-.page-loader {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 1s ease, visibility 1s ease;
-}
-
-.page-loader.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.loader-eye {
-  width: 60px;
-  height: 60px;
-  animation: spiralSpin 2s linear infinite;
-}
-
-/* Footer */
-.footer-zone {
-  margin-top: 100px;
-  padding-bottom: 140px;
-  text-align: center;
-  animation: fadeInUp 3s ease-out;
-}
-
-.footer-zone p {
-  font-family: 'Caveat', cursive;
-  font-size: 0.9rem;
-  color: rgba(143, 179, 106, 0.3);
-}
-
-/* scroll hint */
-.scroll-hint {
-  margin-top: 40px;
-  animation: float 4s ease-in-out infinite;
-  opacity: 0.3;
-}
-
-</style>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="index.css">
 </head>
 <body>
 
 <!-- Loading screen -->
 <div class="page-loader" id="loader">
   <svg class="loader-eye" viewBox="0 0 60 60">
-    <circle cx="30" cy="30" r="28" fill="none" stroke="#8fb36a" stroke-width="1" opacity="0.5"/>
-    <path d="M30 2 A28 28 0 0 1 58 30" fill="none" stroke="#d4a843" stroke-width="2"/>
-    <circle cx="30" cy="30" r="8" fill="#4a6b3a" opacity="0.6"/>
-    <circle cx="30" cy="30" r="3" fill="#d4a843"/>
+    <circle cx="30" cy="30" r="28" fill="none" stroke="#00ffe0" stroke-width="1" opacity="0.5">
+      <animate attributeName="r" values="28;24;28" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <path d="M30 2 A28 28 0 0 1 58 30" fill="none" stroke="#ff6ef0" stroke-width="2"/>
+    <circle cx="30" cy="30" r="8" fill="#6a3db8" opacity="0.6">
+      <animate attributeName="r" values="8;12;8" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="30" cy="30" r="3" fill="#f0c85a">
+      <animate attributeName="fill" values="#f0c85a;#ff6ef0;#00ffe0;#f0c85a" dur="2s" repeatCount="indefinite"/>
+    </circle>
   </svg>
 </div>
 
@@ -423,175 +37,612 @@ body {
 <!-- Drips -->
 <div id="drips"></div>
 
-<!-- Third eyes -->
+<!-- === HALLUCINATION LAYER === -->
+<div class="hallucinations">
+
+  <!-- Melting blob — left side -->
+  <svg class="halluc halluc-blob" viewBox="0 0 120 160" style="top:25%;left:2%;width:220px;">
+    <g opacity="0.28">
+      <path fill="#ff6ef0">
+        <animate attributeName="d" values="
+          M60 10 Q95 20 100 60 Q105 100 80 130 Q60 155 40 130 Q15 100 20 60 Q25 20 60 10Z;
+          M60 15 Q100 30 95 70 Q90 110 70 140 Q55 160 35 135 Q10 105 25 55 Q35 15 60 15Z;
+          M60 8 Q90 15 105 55 Q110 95 85 125 Q65 150 45 128 Q20 100 15 65 Q20 25 60 8Z;
+          M60 10 Q95 20 100 60 Q105 100 80 130 Q60 155 40 130 Q15 100 20 60 Q25 20 60 10Z
+        " dur="12s" repeatCount="indefinite"/>
+      </path>
+      <path fill="#00ffe0" opacity="0.6">
+        <animate attributeName="d" values="
+          M60 20 Q85 30 88 60 Q90 90 75 115 Q60 135 45 115 Q25 90 30 60 Q35 30 60 20Z;
+          M60 25 Q90 35 85 65 Q80 95 68 120 Q55 140 40 118 Q20 92 32 55 Q40 20 60 25Z;
+          M60 18 Q82 25 92 58 Q95 85 78 112 Q62 132 48 114 Q28 88 25 62 Q30 28 60 18Z;
+          M60 20 Q85 30 88 60 Q90 90 75 115 Q60 135 45 115 Q25 90 30 60 Q35 30 60 20Z
+        " dur="10s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </svg>
+
+  <!-- Sacred geometry triangle — right side -->
+  <svg class="halluc halluc-geometry" viewBox="0 0 200 200" style="top:50%;right:1%;width:280px;">
+    <g opacity="0.3">
+      <animateTransform attributeName="transform" type="rotate" values="0 100 100;360 100 100" dur="40s" repeatCount="indefinite"/>
+      <!-- outer triangle -->
+      <polygon points="100,15 185,165 15,165" fill="none" stroke="#ff6ef0" stroke-width="1.2">
+        <animate attributeName="points" values="100,15 185,165 15,165;100,20 180,160 20,160;100,10 190,170 10,170;100,15 185,165 15,165" dur="8s" repeatCount="indefinite"/>
+      </polygon>
+      <!-- inverted inner -->
+      <polygon points="100,165 57,65 143,65" fill="none" stroke="#00ffe0" stroke-width="1">
+        <animate attributeName="points" values="100,165 57,65 143,65;100,160 62,70 138,70;100,170 52,60 148,60;100,165 57,65 143,65" dur="10s" repeatCount="indefinite"/>
+      </polygon>
+      <!-- circle inscribed -->
+      <circle cx="100" cy="115" r="43" fill="none" stroke="#ffaa30" stroke-width="0.8">
+        <animate attributeName="r" values="43;52;35;43" dur="7s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="100" cy="115" r="25" fill="none" stroke="#ff6ef0" stroke-width="0.6">
+        <animate attributeName="r" values="25;32;18;25" dur="9s" repeatCount="indefinite"/>
+      </circle>
+      <!-- center eye -->
+      <circle cx="100" cy="110" r="8" fill="#ffaa30" opacity="0.5">
+        <animate attributeName="r" values="8;14;5;8" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0.8;0.2;0.5" dur="5s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </svg>
+
+  <!-- Ripple rings — bottom left -->
+  <svg class="halluc halluc-ripple" viewBox="0 0 200 200" style="bottom:18%;left:5%;width:300px;">
+    <g opacity="0.3">
+      <circle cx="100" cy="100" r="20" fill="none" stroke="#00ffe0" stroke-width="1.2">
+        <animate attributeName="r" values="20;95;20" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.9;0;0.9" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="100" cy="100" r="20" fill="none" stroke="#ff6ef0" stroke-width="1.2">
+        <animate attributeName="r" values="20;95;20" dur="8s" begin="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.9;0;0.9" dur="8s" begin="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="100" cy="100" r="20" fill="none" stroke="#ffaa30" stroke-width="1.2">
+        <animate attributeName="r" values="20;95;20" dur="8s" begin="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.9;0;0.9" dur="8s" begin="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="100" cy="100" r="8" fill="#00ffe0" opacity="0.6">
+        <animate attributeName="fill" values="#00ffe0;#ff6ef0;#ffaa30;#00ffe0" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="8;14;5;8" dur="4s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </svg>
+
+  <!-- Morphing infinity / lemniscate — mid right -->
+  <svg class="halluc halluc-infinity" viewBox="0 0 200 100" style="top:15%;right:3%;width:260px;">
+    <g opacity="0.3">
+      <path fill="none" stroke="#ff6ef0" stroke-width="1.5">
+        <animate attributeName="d" values="
+          M30 50 C30 20 70 20 100 50 C130 80 170 80 170 50 C170 20 130 20 100 50 C70 80 30 80 30 50Z;
+          M25 50 C25 15 75 15 100 50 C125 85 175 85 175 50 C175 15 125 15 100 50 C75 85 25 85 25 50Z;
+          M35 50 C35 25 65 25 100 50 C135 75 165 75 165 50 C165 25 135 25 100 50 C65 75 35 75 35 50Z;
+          M30 50 C30 20 70 20 100 50 C130 80 170 80 170 50 C170 20 130 20 100 50 C70 80 30 80 30 50Z
+        " dur="10s" repeatCount="indefinite"/>
+      </path>
+      <path fill="none" stroke="#00ffe0" stroke-width="1">
+        <animate attributeName="d" values="
+          M35 50 C35 28 68 28 100 50 C132 72 165 72 165 50 C165 28 132 28 100 50 C68 72 35 72 35 50Z;
+          M30 50 C30 22 72 22 100 50 C128 78 170 78 170 50 C170 22 128 22 100 50 C72 78 30 78 30 50Z;
+          M40 50 C40 32 65 32 100 50 C135 68 160 68 160 50 C160 32 135 32 100 50 C65 68 40 68 40 50Z;
+          M35 50 C35 28 68 28 100 50 C132 72 165 72 165 50 C165 28 132 28 100 50 C68 72 35 72 35 50Z
+        " dur="12s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </svg>
+
+  <!-- Fractal spirograph — center-left floating -->
+  <svg class="halluc halluc-spiro" viewBox="0 0 200 200" style="top:60%;left:6%;width:240px;">
+    <g opacity="0.25">
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0 100 100;360 100 100" dur="20s" repeatCount="indefinite"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#ff6ef0" stroke-width="0.8"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#00ffe0" stroke-width="0.8" transform="rotate(45 100 100)"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#ffaa30" stroke-width="0.8" transform="rotate(90 100 100)"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#ff6ef0" stroke-width="0.8" transform="rotate(135 100 100)"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#00ffe0" stroke-width="0.8" transform="rotate(180 100 100)"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#ffaa30" stroke-width="0.8" transform="rotate(225 100 100)"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#ff6ef0" stroke-width="0.8" transform="rotate(270 100 100)"/>
+        <circle cx="100" cy="40" r="30" fill="none" stroke="#00ffe0" stroke-width="0.8" transform="rotate(315 100 100)"/>
+      </g>
+    </g>
+  </svg>
+
+  <!-- Warping hexagon — top right -->
+  <svg class="halluc halluc-hex" viewBox="0 0 200 200" style="top:3%;right:10%;width:180px;">
+    <g opacity="0.28">
+      <animateTransform attributeName="transform" type="rotate" values="0 100 100;-360 100 100" dur="35s" repeatCount="indefinite"/>
+      <polygon fill="none" stroke="#00ffe0" stroke-width="1.2">
+        <animate attributeName="points" values="
+          100,30 161,65 161,135 100,170 39,135 39,65;
+          100,25 165,62 165,138 100,175 35,138 35,62;
+          100,35 158,68 158,132 100,165 42,132 42,68;
+          100,30 161,65 161,135 100,170 39,135 39,65
+        " dur="9s" repeatCount="indefinite"/>
+      </polygon>
+      <polygon fill="none" stroke="#ff6ef0" stroke-width="0.9">
+        <animate attributeName="points" values="
+          100,50 141,75 141,125 100,150 59,125 59,75;
+          100,45 145,72 145,128 100,155 55,128 55,72;
+          100,55 138,78 138,122 100,145 62,122 62,78;
+          100,50 141,75 141,125 100,150 59,125 59,75
+        " dur="7s" repeatCount="indefinite"/>
+      </polygon>
+      <circle cx="100" cy="100" r="15" fill="none" stroke="#ffaa30" stroke-width="0.8">
+        <animate attributeName="r" values="15;25;10;15" dur="6s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </svg>
+
+  <!-- DNA helix — far left -->
+  <svg class="halluc halluc-dna" viewBox="0 0 60 300" style="top:30%;left:0%;width:80px;">
+    <g opacity="0.25">
+      <path fill="none" stroke="#ff6ef0" stroke-width="1.5">
+        <animate attributeName="d" values="
+          M15 0 Q45 25 15 50 Q-15 75 15 100 Q45 125 15 150 Q-15 175 15 200 Q45 225 15 250 Q-15 275 15 300;
+          M15 0 Q50 25 15 50 Q-20 75 15 100 Q50 125 15 150 Q-20 175 15 200 Q50 225 15 250 Q-20 275 15 300;
+          M15 0 Q45 25 15 50 Q-15 75 15 100 Q45 125 15 150 Q-15 175 15 200 Q45 225 15 250 Q-15 275 15 300
+        " dur="6s" repeatCount="indefinite"/>
+      </path>
+      <path fill="none" stroke="#00ffe0" stroke-width="1.5">
+        <animate attributeName="d" values="
+          M45 0 Q15 25 45 50 Q75 75 45 100 Q15 125 45 150 Q75 175 45 200 Q15 225 45 250 Q75 275 45 300;
+          M45 0 Q10 25 45 50 Q80 75 45 100 Q10 125 45 150 Q80 175 45 200 Q10 225 45 250 Q80 275 45 300;
+          M45 0 Q15 25 45 50 Q75 75 45 100 Q15 125 45 150 Q75 175 45 200 Q15 225 45 250 Q75 275 45 300
+        " dur="6s" repeatCount="indefinite"/>
+      </path>
+      <!-- rungs -->
+      <line x1="20" y1="25" x2="40" y2="25" stroke="#ffaa30" stroke-width="0.8" opacity="0.7"/>
+      <line x1="10" y1="75" x2="50" y2="75" stroke="#ffaa30" stroke-width="0.8" opacity="0.7"/>
+      <line x1="20" y1="125" x2="40" y2="125" stroke="#ffaa30" stroke-width="0.8" opacity="0.7"/>
+      <line x1="10" y1="175" x2="50" y2="175" stroke="#ffaa30" stroke-width="0.8" opacity="0.7"/>
+      <line x1="20" y1="225" x2="40" y2="225" stroke="#ffaa30" stroke-width="0.8" opacity="0.7"/>
+      <line x1="10" y1="275" x2="50" y2="275" stroke="#ffaa30" stroke-width="0.8" opacity="0.7"/>
+    </g>
+  </svg>
+
+  <!-- Morphing amoeba — bottom right -->
+  <svg class="halluc halluc-amoeba" viewBox="0 0 200 200" style="bottom:8%;right:2%;width:260px;">
+    <g opacity="0.25">
+      <path fill="#ff6ef0">
+        <animate attributeName="d" values="
+          M100 30 Q140 30 155 60 Q175 90 160 120 Q150 155 120 165 Q90 175 65 155 Q35 135 30 100 Q25 65 50 45 Q70 30 100 30Z;
+          M100 25 Q145 35 160 65 Q170 95 155 125 Q140 160 110 170 Q80 178 55 150 Q30 125 35 95 Q40 60 60 40 Q80 25 100 25Z;
+          M95 35 Q135 25 158 55 Q180 85 165 115 Q145 150 115 168 Q85 180 58 158 Q32 130 28 98 Q22 62 48 42 Q72 28 95 35Z;
+          M100 30 Q140 30 155 60 Q175 90 160 120 Q150 155 120 165 Q90 175 65 155 Q35 135 30 100 Q25 65 50 45 Q70 30 100 30Z
+        " dur="15s" repeatCount="indefinite"/>
+      </path>
+      <path fill="#00ffe0" opacity="0.5">
+        <animate attributeName="d" values="
+          M100 50 Q130 50 140 70 Q155 90 145 110 Q135 135 115 140 Q90 148 75 135 Q55 118 52 95 Q48 72 62 58 Q78 48 100 50Z;
+          M100 45 Q135 52 145 75 Q152 95 140 115 Q128 140 108 148 Q82 152 68 132 Q50 112 55 88 Q58 65 70 52 Q85 42 100 45Z;
+          M98 52 Q128 45 142 68 Q158 88 148 108 Q135 138 112 145 Q88 150 70 138 Q48 120 50 92 Q45 68 60 55 Q78 45 98 52Z;
+          M100 50 Q130 50 140 70 Q155 90 145 110 Q135 135 115 140 Q90 148 75 135 Q55 118 52 95 Q48 72 62 58 Q78 48 100 50Z
+        " dur="12s" repeatCount="indefinite"/>
+      </path>
+      <!-- nucleus -->
+      <circle cx="100" cy="100" r="14" fill="#ffaa30" opacity="0.5">
+        <animate attributeName="r" values="14;22;10;14" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="cx" values="100;108;92;100" dur="8s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </svg>
+
+  <!-- Concentric diamonds — mid area -->
+  <svg class="halluc halluc-diamonds" viewBox="0 0 200 200" style="top:38%;left:50%;width:220px;margin-left:-280px;">
+    <g opacity="0.25">
+      <animateTransform attributeName="transform" type="rotate" values="0 100 100;90 100 100;0 100 100" dur="20s" repeatCount="indefinite"/>
+      <rect x="60" y="60" width="80" height="80" fill="none" stroke="#ff6ef0" stroke-width="1" transform="rotate(45 100 100)">
+        <animate attributeName="width" values="80;95;65;80" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="height" values="80;95;65;80" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="x" values="60;52;68;60" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="60;52;68;60" dur="7s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="70" y="70" width="60" height="60" fill="none" stroke="#00ffe0" stroke-width="0.8" transform="rotate(45 100 100)">
+        <animate attributeName="width" values="60;75;45;60" dur="9s" repeatCount="indefinite"/>
+        <animate attributeName="height" values="60;75;45;60" dur="9s" repeatCount="indefinite"/>
+        <animate attributeName="x" values="70;62;78;70" dur="9s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="70;62;78;70" dur="9s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="80" y="80" width="40" height="40" fill="none" stroke="#ffaa30" stroke-width="0.8" transform="rotate(45 100 100)">
+        <animate attributeName="width" values="40;55;28;40" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="height" values="40;55;28;40" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="x" values="80;72;86;80" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="80;72;86;80" dur="5s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </svg>
+
+</div>
+
+<!-- Third eyes — trippy -->
 <div class="third-eye" style="top: 15%; left: 8%;">
-  <svg width="50" height="50" viewBox="0 0 50 50">
-    <path d="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" fill="none" stroke="#8fb36a" stroke-width="0.8"/>
-    <circle cx="25" cy="25" r="6" fill="none" stroke="#d4a843" stroke-width="0.5"/>
-    <circle cx="25" cy="25" r="2" fill="#d4a843" opacity="0.4"/>
+  <svg width="60" height="60" viewBox="0 0 50 50">
+    <path d="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" fill="none" stroke="#ff6ef0" stroke-width="0.8">
+      <animate attributeName="d" values="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z;M25 8 Q38 15 42 25 Q38 35 25 42 Q12 35 8 25 Q12 15 25 8Z;M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" dur="5s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="25" cy="25" r="6" fill="none" stroke="#00ffe0" stroke-width="0.5">
+      <animate attributeName="r" values="6;9;4;6" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="25" cy="25" r="2" fill="#ffaa30" opacity="0.5">
+      <animate attributeName="r" values="2;4;2" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="fill" values="#ffaa30;#ff6ef0;#00ffe0;#ffaa30" dur="6s" repeatCount="indefinite"/>
+    </circle>
   </svg>
 </div>
 
 <div class="third-eye" style="bottom: 25%; right: 6%;">
-  <svg width="70" height="70" viewBox="0 0 50 50" style="animation-direction: reverse;">
-    <path d="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" fill="none" stroke="#c44b4f" stroke-width="0.6"/>
-    <circle cx="25" cy="25" r="8" fill="none" stroke="#c44b4f" stroke-width="0.4"/>
-    <circle cx="25" cy="25" r="3" fill="#c44b4f" opacity="0.3"/>
+  <svg width="80" height="80" viewBox="0 0 50 50" style="animation-direction: reverse;">
+    <path d="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" fill="none" stroke="#00ffe0" stroke-width="0.6">
+      <animate attributeName="d" values="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z;M25 10 Q40 18 43 25 Q40 32 25 40 Q10 32 7 25 Q10 18 25 10Z;M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" dur="7s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="25" cy="25" r="8" fill="none" stroke="#ff6ef0" stroke-width="0.4">
+      <animate attributeName="r" values="8;12;6;8" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="25" cy="25" r="3" fill="#ff6ef0" opacity="0.35">
+      <animate attributeName="r" values="3;5;3" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="fill" values="#ff6ef0;#00ffe0;#ffaa30;#ff6ef0" dur="8s" repeatCount="indefinite"/>
+    </circle>
   </svg>
 </div>
 
-<!-- Vine SVGs -->
+<!-- Extra eye top right -->
+<div class="third-eye" style="top: 40%; right: 12%;">
+  <svg width="40" height="40" viewBox="0 0 50 50">
+    <path d="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" fill="none" stroke="#ffaa30" stroke-width="0.5">
+      <animate attributeName="stroke" values="#ffaa30;#ff6ef0;#00ffe0;#ffaa30" dur="10s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="25" cy="25" r="4" fill="#ffaa30" opacity="0.2">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+</div>
+
+<!-- Vine SVGs — trippy with animated colors and morphing -->
 <div class="vine-container vine-left">
   <svg viewBox="0 0 200 1000" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <defs>
+      <linearGradient id="vineGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ff6ef0" stop-opacity="0.5"/>
+        <stop offset="50%" stop-color="#00ffe0" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#ffaa30" stop-opacity="0.5"/>
+      </linearGradient>
+      <linearGradient id="vineGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#6a3db8" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#7ac460" stop-opacity="0.3"/>
+      </linearGradient>
+      <radialGradient id="mushGlow" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="#ff6ef0" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#e8667a" stop-opacity="0.3"/>
+      </radialGradient>
+      <filter id="tripGlow">
+        <feGaussianBlur stdDeviation="1.5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
     <!-- Main vine -->
-    <path d="M100 0 Q80 100 120 200 Q140 300 80 400 Q40 500 110 600 Q150 700 70 800 Q30 900 100 1000" 
-          fill="none" stroke="#4a6b3a" stroke-width="3" opacity="0.6"/>
+    <path d="M100 0 Q80 100 120 200 Q140 300 80 400 Q40 500 110 600 Q150 700 70 800 Q30 900 100 1000"
+          fill="none" stroke="url(#vineGrad1)" stroke-width="3" opacity="0.6">
+      <animate attributeName="d" values="M100 0 Q80 100 120 200 Q140 300 80 400 Q40 500 110 600 Q150 700 70 800 Q30 900 100 1000;M100 0 Q70 100 130 200 Q150 300 70 400 Q30 500 120 600 Q160 700 60 800 Q20 900 110 1000;M100 0 Q80 100 120 200 Q140 300 80 400 Q40 500 110 600 Q150 700 70 800 Q30 900 100 1000" dur="12s" repeatCount="indefinite"/>
+    </path>
     <!-- Secondary vine -->
-    <path d="M110 0 Q90 80 130 180 Q160 280 90 380 Q50 480 120 580 Q170 680 80 780 Q40 880 120 980" 
-          fill="none" stroke="#8fb36a" stroke-width="1.5" opacity="0.3"/>
-    <!-- Leaves -->
+    <path d="M110 0 Q90 80 130 180 Q160 280 90 380 Q50 480 120 580 Q170 680 80 780 Q40 880 120 980"
+          fill="none" stroke="url(#vineGrad2)" stroke-width="1.5" opacity="0.4"/>
+    <!-- Leaves — morphing -->
     <g opacity="0.5">
-      <ellipse cx="120" cy="200" rx="25" ry="10" fill="#4a6b3a" transform="rotate(-30 120 200)"/>
-      <ellipse cx="80" cy="400" rx="20" ry="8" fill="#8fb36a" transform="rotate(20 80 400)"/>
-      <ellipse cx="110" cy="600" rx="22" ry="9" fill="#4a6b3a" transform="rotate(-15 110 600)"/>
-      <ellipse cx="70" cy="800" rx="18" ry="7" fill="#8fb36a" transform="rotate(25 70 800)"/>
+      <ellipse cx="120" cy="200" rx="25" ry="10" fill="#7ac460" transform="rotate(-30 120 200)">
+        <animate attributeName="rx" values="25;30;20;25" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="fill" values="#7ac460;#00ffe0;#7ac460" dur="8s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="80" cy="400" rx="20" ry="8" fill="#b8e090" transform="rotate(20 80 400)">
+        <animate attributeName="rx" values="20;26;18;20" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="fill" values="#b8e090;#ff6ef0;#b8e090" dur="10s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="110" cy="600" rx="22" ry="9" fill="#7ac460" transform="rotate(-15 110 600)">
+        <animate attributeName="rx" values="22;28;19;22" dur="5s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="70" cy="800" rx="18" ry="7" fill="#b8e090" transform="rotate(25 70 800)">
+        <animate attributeName="fill" values="#b8e090;#ffaa30;#b8e090" dur="9s" repeatCount="indefinite"/>
+      </ellipse>
     </g>
-    <!-- Tiny flowers -->
-    <g opacity="0.6">
-      <circle cx="85" cy="150" r="4" fill="#c44b4f"/>
-      <circle cx="85" cy="150" r="7" fill="none" stroke="#c44b4f" stroke-width="0.5"/>
-      <circle cx="130" cy="350" r="3" fill="#d4a843"/>
-      <circle cx="130" cy="350" r="6" fill="none" stroke="#d4a843" stroke-width="0.5"/>
-      <circle cx="60" cy="550" r="5" fill="#c44b4f"/>
-      <circle cx="60" cy="550" r="9" fill="none" stroke="#c44b4f" stroke-width="0.5"/>
-      <circle cx="100" cy="750" r="3" fill="#d4a843"/>
+    <!-- Tiny flowers — pulsing neon -->
+    <g opacity="0.6" filter="url(#tripGlow)">
+      <circle cx="85" cy="150" r="4" fill="#ff6ef0">
+        <animate attributeName="r" values="4;6;3;4" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="85" cy="150" r="7" fill="none" stroke="#ff6ef0" stroke-width="0.5">
+        <animate attributeName="r" values="7;11;7" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="130" cy="350" r="3" fill="#00ffe0">
+        <animate attributeName="r" values="3;5;2;3" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="130" cy="350" r="6" fill="none" stroke="#00ffe0" stroke-width="0.5">
+        <animate attributeName="r" values="6;10;6" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="60" cy="550" r="5" fill="#ffaa30">
+        <animate attributeName="r" values="5;7;4;5" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="60" cy="550" r="9" fill="none" stroke="#ffaa30" stroke-width="0.5">
+        <animate attributeName="r" values="9;13;9" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="100" cy="750" r="3" fill="#ff6ef0">
+        <animate attributeName="fill" values="#ff6ef0;#00ffe0;#ffaa30;#ff6ef0" dur="5s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <!-- Mushrooms -->
-    <g opacity="0.5" transform="translate(50, 480)">
-      <rect x="8" y="12" width="4" height="15" rx="2" fill="#e8c86a" opacity="0.6"/>
-      <ellipse cx="10" cy="12" rx="12" ry="8" fill="#c44b4f"/>
-      <circle cx="6" cy="10" r="1.5" fill="#fff" opacity="0.5"/>
-      <circle cx="13" cy="8" r="1" fill="#fff" opacity="0.5"/>
+    <!-- Mushroom — breathing & glowing -->
+    <g opacity="0.6" transform="translate(50, 480)" filter="url(#tripGlow)">
+      <rect x="8" y="12" width="4" height="15" rx="2" fill="#b8e090" opacity="0.6">
+        <animateTransform attributeName="transform" type="skewX" values="0;4;-3;0" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="10" cy="12" rx="12" ry="8" fill="url(#mushGlow)">
+        <animate attributeName="rx" values="12;15;10;12" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="8;6;10;8" dur="6s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="6" cy="10" r="1.5" fill="#00ffe0" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.9;0.3;0.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="13" cy="8" r="1" fill="#ffaa30" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.8;0.2;0.5" dur="4s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <!-- Spiral tendril -->
-    <path d="M90 300 Q100 290 105 300 Q110 310 100 315 Q90 320 85 310 Q80 300 90 295" 
-          fill="none" stroke="#8fb36a" stroke-width="1" opacity="0.4"/>
+    <!-- Spiral tendril — morphing -->
+    <path d="M90 300 Q100 290 105 300 Q110 310 100 315 Q90 320 85 310 Q80 300 90 295"
+          fill="none" stroke="#00ffe0" stroke-width="1" opacity="0.4">
+      <animate attributeName="stroke" values="#00ffe0;#ff6ef0;#ffaa30;#00ffe0" dur="6s" repeatCount="indefinite"/>
+    </path>
     <!-- Fern fronds -->
-    <g opacity="0.35" transform="translate(60,650)">
-      <path d="M0 40 Q10 30 5 20 Q0 10 10 0" fill="none" stroke="#4a6b3a" stroke-width="1.5"/>
-      <path d="M5 35 L15 28" fill="none" stroke="#4a6b3a" stroke-width="0.8"/>
-      <path d="M3 25 L-8 20" fill="none" stroke="#4a6b3a" stroke-width="0.8"/>
-      <path d="M7 15 L18 10" fill="none" stroke="#4a6b3a" stroke-width="0.8"/>
+    <g opacity="0.4" transform="translate(60,650)">
+      <path d="M0 40 Q10 30 5 20 Q0 10 10 0" fill="none" stroke="#7ac460" stroke-width="1.5">
+        <animate attributeName="stroke" values="#7ac460;#00ffe0;#7ac460" dur="8s" repeatCount="indefinite"/>
+      </path>
+      <path d="M5 35 L15 28" fill="none" stroke="#7ac460" stroke-width="0.8"/>
+      <path d="M3 25 L-8 20" fill="none" stroke="#7ac460" stroke-width="0.8"/>
+      <path d="M7 15 L18 10" fill="none" stroke="#7ac460" stroke-width="0.8"/>
     </g>
   </svg>
 </div>
 
 <div class="vine-container vine-right">
   <svg viewBox="0 0 200 1000" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-    <path d="M100 0 Q130 120 70 220 Q40 320 120 420 Q160 520 80 620 Q30 720 130 820 Q170 920 90 1000" 
-          fill="none" stroke="#4a6b3a" stroke-width="3" opacity="0.6"/>
-    <path d="M90 0 Q120 100 60 200 Q30 300 110 400 Q150 500 70 600 Q20 700 120 800 Q160 900 80 980" 
-          fill="none" stroke="#8fb36a" stroke-width="1.5" opacity="0.3"/>
+    <path d="M100 0 Q130 120 70 220 Q40 320 120 420 Q160 520 80 620 Q30 720 130 820 Q170 920 90 1000"
+          fill="none" stroke="url(#vineGrad1)" stroke-width="3" opacity="0.6">
+      <animate attributeName="d" values="M100 0 Q130 120 70 220 Q40 320 120 420 Q160 520 80 620 Q30 720 130 820 Q170 920 90 1000;M100 0 Q140 120 60 220 Q30 320 130 420 Q170 520 70 620 Q20 720 140 820 Q180 920 80 1000;M100 0 Q130 120 70 220 Q40 320 120 420 Q160 520 80 620 Q30 720 130 820 Q170 920 90 1000" dur="14s" repeatCount="indefinite"/>
+    </path>
+    <path d="M90 0 Q120 100 60 200 Q30 300 110 400 Q150 500 70 600 Q20 700 120 800 Q160 900 80 980"
+          fill="none" stroke="url(#vineGrad2)" stroke-width="1.5" opacity="0.35"/>
     <g opacity="0.5">
-      <ellipse cx="70" cy="220" rx="25" ry="10" fill="#4a6b3a" transform="rotate(30 70 220)"/>
-      <ellipse cx="120" cy="420" rx="20" ry="8" fill="#8fb36a" transform="rotate(-20 120 420)"/>
-      <ellipse cx="80" cy="620" rx="22" ry="9" fill="#4a6b3a" transform="rotate(15 80 620)"/>
-      <ellipse cx="130" cy="820" rx="18" ry="7" fill="#8fb36a" transform="rotate(-25 130 820)"/>
+      <ellipse cx="70" cy="220" rx="25" ry="10" fill="#7ac460" transform="rotate(30 70 220)">
+        <animate attributeName="fill" values="#7ac460;#ff6ef0;#7ac460" dur="9s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="120" cy="420" rx="20" ry="8" fill="#b8e090" transform="rotate(-20 120 420)">
+        <animate attributeName="rx" values="20;25;17;20" dur="6s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="80" cy="620" rx="22" ry="9" fill="#7ac460" transform="rotate(15 80 620)">
+        <animate attributeName="fill" values="#7ac460;#00ffe0;#7ac460" dur="7s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="130" cy="820" rx="18" ry="7" fill="#b8e090" transform="rotate(-25 130 820)">
+        <animate attributeName="rx" values="18;23;15;18" dur="8s" repeatCount="indefinite"/>
+      </ellipse>
     </g>
-    <g opacity="0.6">
-      <circle cx="115" cy="170" r="4" fill="#d4a843"/>
-      <circle cx="50" cy="370" r="5" fill="#c44b4f"/>
-      <circle cx="50" cy="370" r="9" fill="none" stroke="#c44b4f" stroke-width="0.5"/>
-      <circle cx="140" cy="570" r="3" fill="#d4a843"/>
-      <circle cx="90" cy="770" r="4" fill="#c44b4f"/>
+    <g opacity="0.6" filter="url(#tripGlow)">
+      <circle cx="115" cy="170" r="4" fill="#ffaa30">
+        <animate attributeName="r" values="4;6;3;4" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="50" cy="370" r="5" fill="#ff6ef0">
+        <animate attributeName="r" values="5;7;4;5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="50" cy="370" r="9" fill="none" stroke="#ff6ef0" stroke-width="0.5">
+        <animate attributeName="r" values="9;13;9" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="140" cy="570" r="3" fill="#00ffe0">
+        <animate attributeName="fill" values="#00ffe0;#ffaa30;#ff6ef0;#00ffe0" dur="6s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="90" cy="770" r="4" fill="#ff6ef0">
+        <animate attributeName="r" values="4;6;3;4" dur="5s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <!-- Mushroom cluster -->
-    <g opacity="0.5" transform="translate(120, 680)">
-      <rect x="6" y="10" width="3" height="12" rx="1.5" fill="#e8c86a" opacity="0.6"/>
-      <ellipse cx="7.5" cy="10" rx="10" ry="7" fill="#c44b4f"/>
-      <circle cx="4" cy="8" r="1" fill="#fff" opacity="0.5"/>
-      <circle cx="10" cy="7" r="1.5" fill="#fff" opacity="0.5"/>
+    <!-- Mushroom cluster — breathing -->
+    <g opacity="0.6" transform="translate(120, 680)" filter="url(#tripGlow)">
+      <rect x="6" y="10" width="3" height="12" rx="1.5" fill="#b8e090" opacity="0.6">
+        <animateTransform attributeName="transform" type="skewX" values="0;-3;5;0" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="7.5" cy="10" rx="10" ry="7" fill="url(#mushGlow)">
+        <animate attributeName="rx" values="10;13;8;10" dur="5s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="4" cy="8" r="1" fill="#00ffe0" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.9;0.3;0.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="10" cy="7" r="1.5" fill="#ffaa30" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.8;0.2;0.5" dur="4s" repeatCount="indefinite"/>
+      </circle>
     </g>
     <g opacity="0.4" transform="translate(135, 695)">
-      <rect x="4" y="8" width="2.5" height="10" rx="1" fill="#e8c86a" opacity="0.6"/>
-      <ellipse cx="5" cy="8" rx="7" ry="5" fill="#c44b4f" opacity="0.8"/>
+      <rect x="4" y="8" width="2.5" height="10" rx="1" fill="#b8e090" opacity="0.6"/>
+      <ellipse cx="5" cy="8" rx="7" ry="5" fill="#ffaa30" opacity="0.35">
+        <animate attributeName="ry" values="5;7;4;5" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
     </g>
-    <!-- Eye on vine -->
-    <g opacity="0.25" transform="translate(85, 500)">
-      <ellipse cx="12" cy="8" rx="12" ry="8" fill="none" stroke="#d4a843" stroke-width="1"/>
-      <circle cx="12" cy="8" r="4" fill="#d4a843" opacity="0.4"/>
-      <circle cx="12" cy="8" r="1.5" fill="#1a2e12"/>
+    <!-- Eye on vine — pulsing -->
+    <g opacity="0.3" transform="translate(85, 500)">
+      <ellipse cx="12" cy="8" rx="12" ry="8" fill="none" stroke="#ff6ef0" stroke-width="1">
+        <animate attributeName="ry" values="8;3;8" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="12" cy="8" r="4" fill="#ff6ef0" opacity="0.3">
+        <animate attributeName="r" values="4;2;4" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="12" cy="8" r="1.5" fill="#2a1845">
+        <animate attributeName="fill" values="#1a0e2e;#00ffe0;#1a0e2e" dur="4s" repeatCount="indefinite"/>
+      </circle>
     </g>
   </svg>
 </div>
 
-<!-- Bottom mushroom garden -->
+<!-- Bottom mushroom garden — trippy -->
 <div class="mushroom-garden">
   <svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;bottom:0">
+    <defs>
+      <radialGradient id="mushGlow2" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="#ff6ef0" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#e8667a" stop-opacity="0.3"/>
+      </radialGradient>
+      <linearGradient id="groundGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#3a2560" stop-opacity="0.8"/>
+        <stop offset="50%" stop-color="#2e1a50" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#3a2560" stop-opacity="0.8"/>
+      </linearGradient>
+      <filter id="tripGlow2">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
     <!-- Ground -->
-    <path d="M0 80 Q100 60 200 75 Q350 85 500 70 Q650 55 800 78 Q950 90 1100 65 L1200 75 L1200 120 L0 120Z" 
-          fill="#1a2e12" opacity="0.8"/>
-    <path d="M0 90 Q150 80 300 88 Q450 95 600 82 Q750 70 900 88 Q1050 100 1200 85 L1200 120 L0 120Z" 
-          fill="#0d1a08"/>
-    <!-- Mushrooms -->
-    <g transform="translate(100, 50)">
-      <rect x="13" y="15" width="5" height="25" rx="2.5" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="15.5" cy="15" rx="18" ry="13" fill="#c44b4f" opacity="0.7"/>
-      <circle cx="10" cy="12" r="2" fill="#fff" opacity="0.4"/>
-      <circle cx="20" cy="9" r="1.5" fill="#fff" opacity="0.4"/>
-      <circle cx="14" cy="7" r="1" fill="#fff" opacity="0.3"/>
+    <path d="M0 80 Q100 60 200 75 Q350 85 500 70 Q650 55 800 78 Q950 90 1100 65 L1200 75 L1200 120 L0 120Z"
+          fill="url(#groundGrad)"/>
+    <path d="M0 90 Q150 80 300 88 Q450 95 600 82 Q750 70 900 88 Q1050 100 1200 85 L1200 120 L0 120Z"
+          fill="#2a1845"/>
+    <!-- Mushrooms — trippy with glow and breathing -->
+    <g transform="translate(100, 50)" filter="url(#tripGlow2)">
+      <rect x="13" y="15" width="5" height="25" rx="2.5" fill="#b8e090" opacity="0.5">
+        <animateTransform attributeName="transform" type="skewX" values="0;4;-3;0" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="15.5" cy="15" rx="18" ry="13" fill="url(#mushGlow2)">
+        <animate attributeName="rx" values="18;21;16;18" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="13;10;15;13" dur="6s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="10" cy="12" r="2" fill="#00ffe0" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.8;0.2;0.4" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="20" cy="9" r="1.5" fill="#ffaa30" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.9;0.2;0.4" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="14" cy="7" r="1" fill="#ff6ef0" opacity="0.3">
+        <animate attributeName="r" values="1;2;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <g transform="translate(130, 58)">
-      <rect x="8" y="10" width="4" height="18" rx="2" fill="#8fb36a" opacity="0.4"/>
-      <ellipse cx="10" cy="10" rx="13" ry="9" fill="#d4a843" opacity="0.5"/>
+    <g transform="translate(130, 58)" filter="url(#tripGlow2)">
+      <rect x="8" y="10" width="4" height="18" rx="2" fill="#b8e090" opacity="0.4">
+        <animateTransform attributeName="transform" type="skewX" values="0;-3;4;0" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="10" cy="10" rx="13" ry="9" fill="#ffaa30" opacity="0.4">
+        <animate attributeName="rx" values="13;16;11;13" dur="5s" repeatCount="indefinite"/>
+      </ellipse>
     </g>
-    <g transform="translate(400, 42)">
-      <rect x="10" y="12" width="4" height="22" rx="2" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="12" cy="12" rx="15" ry="11" fill="#c44b4f" opacity="0.6"/>
-      <circle cx="8" cy="9" r="1.5" fill="#fff" opacity="0.4"/>
-      <circle cx="16" cy="7" r="2" fill="#fff" opacity="0.3"/>
+    <g transform="translate(400, 42)" filter="url(#tripGlow2)">
+      <rect x="10" y="12" width="4" height="22" rx="2" fill="#b8e090" opacity="0.5">
+        <animateTransform attributeName="transform" type="skewX" values="0;5;-4;0" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="12" cy="12" rx="15" ry="11" fill="url(#mushGlow2)">
+        <animate attributeName="rx" values="15;18;13;15" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="11;8;13;11" dur="7s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="8" cy="9" r="1.5" fill="#00ffe0" opacity="0.4">
+        <animate attributeName="r" values="1.5;3;1.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="16" cy="7" r="2" fill="#ffaa30" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.7;0.1;0.3" dur="4s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <g transform="translate(700, 48)">
-      <rect x="12" y="14" width="5" height="20" rx="2.5" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="14.5" cy="14" rx="17" ry="12" fill="#c44b4f" opacity="0.7"/>
-      <circle cx="9" cy="11" r="1.5" fill="#fff" opacity="0.4"/>
-      <circle cx="18" cy="8" r="2" fill="#fff" opacity="0.3"/>
+    <g transform="translate(700, 48)" filter="url(#tripGlow2)">
+      <rect x="12" y="14" width="5" height="20" rx="2.5" fill="#b8e090" opacity="0.5">
+        <animateTransform attributeName="transform" type="skewX" values="0;-4;6;0" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="14.5" cy="14" rx="17" ry="12" fill="url(#mushGlow2)">
+        <animate attributeName="rx" values="17;20;15;17" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="12;9;14;12" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="9" cy="11" r="1.5" fill="#ff6ef0" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.9;0.2;0.4" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="18" cy="8" r="2" fill="#00ffe0" opacity="0.3">
+        <animate attributeName="r" values="2;3.5;2" dur="4s" repeatCount="indefinite"/>
+      </circle>
     </g>
     <g transform="translate(730, 56)">
-      <rect x="6" y="8" width="3" height="14" rx="1.5" fill="#8fb36a" opacity="0.4"/>
-      <ellipse cx="7.5" cy="8" rx="10" ry="7" fill="#d4a843" opacity="0.4"/>
+      <rect x="6" y="8" width="3" height="14" rx="1.5" fill="#b8e090" opacity="0.4"/>
+      <ellipse cx="7.5" cy="8" rx="10" ry="7" fill="#ffaa30" opacity="0.3">
+        <animate attributeName="ry" values="7;9;5;7" dur="5s" repeatCount="indefinite"/>
+      </ellipse>
     </g>
-    <g transform="translate(950, 38)">
-      <rect x="11" y="13" width="4" height="25" rx="2" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="13" cy="13" rx="16" ry="11" fill="#c44b4f" opacity="0.6"/>
-      <circle cx="8" cy="10" r="2" fill="#fff" opacity="0.3"/>
-      <circle cx="17" cy="8" r="1.5" fill="#fff" opacity="0.4"/>
+    <g transform="translate(950, 38)" filter="url(#tripGlow2)">
+      <rect x="11" y="13" width="4" height="25" rx="2" fill="#b8e090" opacity="0.5">
+        <animateTransform attributeName="transform" type="skewX" values="0;3;-5;0" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <ellipse cx="13" cy="13" rx="16" ry="11" fill="url(#mushGlow2)">
+        <animate attributeName="rx" values="16;19;14;16" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="11;8;13;11" dur="7s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="8" cy="10" r="2" fill="#00ffe0" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.7;0.1;0.3" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="17" cy="8" r="1.5" fill="#ffaa30" opacity="0.4">
+        <animate attributeName="r" values="1.5;3;1.5" dur="4s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <!-- Grass tufts -->
-    <g stroke="#4a6b3a" fill="none" stroke-width="1.5" opacity="0.5">
-      <path d="M50 85 Q52 65 48 50"/><path d="M55 85 Q60 60 55 45"/><path d="M45 85 Q40 60 43 48"/>
-      <path d="M250 80 Q252 60 248 45"/><path d="M255 80 Q260 55 255 40"/>
-      <path d="M550 75 Q553 55 548 40"/><path d="M555 75 Q560 50 553 35"/>
-      <path d="M850 82 Q852 62 848 47"/><path d="M855 82 Q860 57 853 42"/>
-      <path d="M1100 78 Q1103 58 1098 43"/><path d="M1105 78 Q1110 53 1103 38"/>
+    <!-- Grass tufts — color-shifting -->
+    <g fill="none" stroke-width="1.5" opacity="0.5">
+      <path d="M50 85 Q52 65 48 50" stroke="#7ac460"><animate attributeName="stroke" values="#7ac460;#00ffe0;#7ac460" dur="8s" repeatCount="indefinite"/></path>
+      <path d="M55 85 Q60 60 55 45" stroke="#7ac460"/>
+      <path d="M45 85 Q40 60 43 48" stroke="#7ac460"/>
+      <path d="M250 80 Q252 60 248 45" stroke="#7ac460"><animate attributeName="stroke" values="#7ac460;#ff6ef0;#7ac460" dur="10s" repeatCount="indefinite"/></path>
+      <path d="M255 80 Q260 55 255 40" stroke="#7ac460"/>
+      <path d="M550 75 Q553 55 548 40" stroke="#7ac460"><animate attributeName="stroke" values="#7ac460;#ffaa30;#7ac460" dur="9s" repeatCount="indefinite"/></path>
+      <path d="M555 75 Q560 50 553 35" stroke="#7ac460"/>
+      <path d="M850 82 Q852 62 848 47" stroke="#7ac460"/>
+      <path d="M855 82 Q860 57 853 42" stroke="#7ac460"/>
+      <path d="M1100 78 Q1103 58 1098 43" stroke="#7ac460"><animate attributeName="stroke" values="#7ac460;#00ffe0;#7ac460" dur="7s" repeatCount="indefinite"/></path>
+      <path d="M1105 78 Q1110 53 1103 38" stroke="#7ac460"/>
     </g>
-    <!-- Tiny flowers in grass -->
+    <!-- Floating spores -->
+    <circle cx="180" cy="70" r="1.5" fill="#ff6ef0" opacity="0.3">
+      <animate attributeName="cy" values="70;45;70" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="500" cy="65" r="1" fill="#00ffe0" opacity="0.3">
+      <animate attributeName="cy" values="65;40;65" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="780" cy="60" r="1.5" fill="#ffaa30" opacity="0.25">
+      <animate attributeName="cy" values="60;35;60" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1050" cy="68" r="1" fill="#ff6ef0" opacity="0.3">
+      <animate attributeName="cy" values="68;45;68" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Tiny flowers in grass — pulsing neon -->
     <g opacity="0.5">
-      <circle cx="260" cy="73" r="3" fill="#d4a843"/>
-      <circle cx="560" cy="68" r="2.5" fill="#c44b4f"/>
-      <circle cx="860" cy="75" r="3" fill="#d4a843"/>
+      <circle cx="260" cy="73" r="3" fill="#ffaa30">
+        <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="560" cy="68" r="2.5" fill="#ff6ef0">
+        <animate attributeName="r" values="2.5;4;2.5" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="860" cy="75" r="3" fill="#00ffe0">
+        <animate attributeName="r" values="3;4.5;3" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
     </g>
   </svg>
 </div>
 
 <!-- MAIN CONTENT -->
 <div class="main-content">
-  <!-- Decorative top SVG -->
-  <svg width="120" height="40" viewBox="0 0 120 40" style="opacity:0.3; margin-top:20px; animation: fadeInUp 1s ease-out;">
-    <path d="M10 20 Q30 5 60 20 Q90 35 110 20" fill="none" stroke="#8fb36a" stroke-width="1.5"/>
-    <circle cx="60" cy="20" r="3" fill="#d4a843"/>
-    <path d="M25 15 Q30 10 35 15" fill="none" stroke="#4a6b3a" stroke-width="1"/>
-    <path d="M85 15 Q90 10 95 15" fill="none" stroke="#4a6b3a" stroke-width="1"/>
+  <!-- Decorative top SVG — trippy -->
+  <svg width="140" height="50" viewBox="0 0 140 50" style="opacity:0.35; margin-top:20px; animation: fadeInUp 1s ease-out;">
+    <path d="M10 25 Q35 8 70 25 Q105 42 130 25" fill="none" stroke="#ff6ef0" stroke-width="1.5">
+      <animate attributeName="d" values="M10 25 Q35 8 70 25 Q105 42 130 25;M10 25 Q35 42 70 25 Q105 8 130 25;M10 25 Q35 8 70 25 Q105 42 130 25" dur="6s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="70" cy="25" r="4" fill="none" stroke="#00ffe0" stroke-width="0.8">
+      <animate attributeName="r" values="4;7;4" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="70" cy="25" r="2" fill="#ffaa30" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <path d="M30 18 Q35 12 40 18" fill="none" stroke="#6a3db8" stroke-width="1">
+      <animate attributeName="d" values="M30 18 Q35 12 40 18;M30 18 Q35 22 40 18;M30 18 Q35 12 40 18" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M100 18 Q105 12 110 18" fill="none" stroke="#6a3db8" stroke-width="1">
+      <animate attributeName="d" values="M100 18 Q105 12 110 18;M100 18 Q105 22 110 18;M100 18 Q105 12 110 18" dur="5s" repeatCount="indefinite"/>
+    </path>
   </svg>
 
   <!-- Logo -->
@@ -612,16 +663,27 @@ body {
     <div class="concert-cta">klikni pro všechny koncerty →</div>
   </a>
 
-  <!-- Decorative separator -->
-  <svg width="200" height="60" viewBox="0 0 200 60" style="opacity:0.2; margin: 40px 0; animation: fadeInUp 2.2s ease-out;">
-    <path d="M10 30 Q50 10 100 30 Q150 50 190 30" fill="none" stroke="#8fb36a" stroke-width="1"/>
-    <path d="M30 30 Q70 45 100 30 Q130 15 170 30" fill="none" stroke="#d4a843" stroke-width="0.8"/>
-    <circle cx="100" cy="30" r="5" fill="none" stroke="#c44b4f" stroke-width="0.8"/>
-    <circle cx="100" cy="30" r="2" fill="#c44b4f" opacity="0.5"/>
-    <!-- tiny mushroom -->
-    <g transform="translate(95, 10)">
-      <rect x="4" y="6" width="2" height="8" rx="1" fill="#8fb36a" opacity="0.5"/>
-      <ellipse cx="5" cy="6" rx="6" ry="4" fill="#c44b4f" opacity="0.5"/>
+  <!-- Decorative separator — trippy -->
+  <svg width="220" height="70" viewBox="0 0 220 70" style="opacity:0.25; margin: 40px 0; animation: fadeInUp 2.2s ease-out;">
+    <path d="M10 35 Q55 12 110 35 Q165 58 210 35" fill="none" stroke="#ff6ef0" stroke-width="1">
+      <animate attributeName="d" values="M10 35 Q55 12 110 35 Q165 58 210 35;M10 35 Q55 58 110 35 Q165 12 210 35;M10 35 Q55 12 110 35 Q165 58 210 35" dur="7s" repeatCount="indefinite"/>
+    </path>
+    <path d="M30 35 Q75 52 110 35 Q145 18 190 35" fill="none" stroke="#00ffe0" stroke-width="0.8">
+      <animate attributeName="d" values="M30 35 Q75 52 110 35 Q145 18 190 35;M30 35 Q75 18 110 35 Q145 52 190 35;M30 35 Q75 52 110 35 Q145 18 190 35" dur="5s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="110" cy="35" r="6" fill="none" stroke="#ffaa30" stroke-width="0.8">
+      <animate attributeName="r" values="6;10;6" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0.2;0.5" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="110" cy="35" r="2.5" fill="#ff6ef0" opacity="0.4">
+      <animate attributeName="r" values="2.5;4;2.5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- tiny mushroom — breathing -->
+    <g transform="translate(105, 12)">
+      <rect x="4" y="6" width="2" height="8" rx="1" fill="#b8e090" opacity="0.5"/>
+      <ellipse cx="5" cy="6" rx="6" ry="4" fill="#ff6ef0" opacity="0.4">
+        <animate attributeName="rx" values="6;8;5;6" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
     </g>
   </svg>
 
@@ -635,40 +697,46 @@ body {
   <!-- Scroll hint -->
   <div class="scroll-hint">
     <svg width="30" height="40" viewBox="0 0 30 40" opacity="0.4">
-      <path d="M15 5 L15 30" stroke="#8fb36a" stroke-width="1.5" fill="none"/>
-      <path d="M8 23 L15 32 L22 23" stroke="#8fb36a" stroke-width="1.5" fill="none"/>
+      <path d="M15 5 L15 30" stroke="#00ffe0" stroke-width="1.5" fill="none"/>
+      <path d="M8 23 L15 32 L22 23" stroke="#00ffe0" stroke-width="1.5" fill="none"/>
     </svg>
   </div>
 
   <div class="footer-zone">
     <p>projekt hůrka © 2026</p>
     <p style="margin-top: 8px; font-size: 0.8rem;">rosteme z půdy</p>
+    <p style="margin-top: 12px; font-size: 0.85rem;">vytvořil <a href="https://vincentsmid.xyz" target="_blank" style="color: rgba(184, 224, 144, 0.4); text-decoration: none;">vincent šmíd</a></p>
   </div>
 </div>
 
 <script>
-// === FIREFLIES ===
+// === FIREFLIES — neon colors ===
 const firefliesContainer = document.getElementById('fireflies');
-for (let i = 0; i < 25; i++) {
+const fireflyColors = ['#ff6ef0', '#00ffe0', '#ffaa30', '#f5e080', '#b8e090'];
+for (let i = 0; i < 30; i++) {
   const ff = document.createElement('div');
   ff.className = 'firefly';
   ff.style.left = Math.random() * 100 + '%';
   ff.style.top = Math.random() * 100 + '%';
   ff.style.animationDelay = Math.random() * 5 + 's';
-  ff.style.animationDuration = (3 + Math.random() * 4) + 's, ' + (6 + Math.random() * 6) + 's';
+  ff.style.animationDuration = (3 + Math.random() * 4) + 's, ' + (6 + Math.random() * 6) + 's, ' + (3 + Math.random() * 3) + 's';
+  ff.style.background = fireflyColors[Math.floor(Math.random() * fireflyColors.length)];
   ff.style.width = (2 + Math.random() * 4) + 'px';
   ff.style.height = ff.style.width;
   firefliesContainer.appendChild(ff);
 }
 
-// === DRIPS ===
+// === DRIPS — neon colored ===
 const dripsContainer = document.getElementById('drips');
-for (let i = 0; i < 8; i++) {
+const dripColors = ['#ff6ef0', '#00ffe0', '#ffaa30', '#b8e090'];
+for (let i = 0; i < 10; i++) {
   const drip = document.createElement('div');
   drip.className = 'drip';
   drip.style.left = (10 + Math.random() * 80) + '%';
   drip.style.animationDelay = Math.random() * 8 + 's';
   drip.style.animationDuration = (4 + Math.random() * 4) + 's';
+  const color = dripColors[Math.floor(Math.random() * dripColors.length)];
+  drip.style.background = `linear-gradient(to bottom, transparent, ${color}, transparent)`;
   dripsContainer.appendChild(drip);
 }
 
@@ -686,9 +754,9 @@ async function loadNextConcert() {
     const text = await response.text();
     const concerts = parseConcerts(text);
     const now = new Date();
-    
+
     const upcoming = concerts.filter(c => c.date >= now);
-    
+
     if (upcoming.length > 0) {
       const next = upcoming[0];
       document.getElementById('concertTitle').textContent = next.title;
@@ -709,11 +777,11 @@ async function loadNextConcert() {
 function parseConcerts(md) {
   const concerts = [];
   const blocks = md.split(/^---$/m).filter(b => b.trim());
-  
+
   for (const block of blocks) {
     const concert = {};
     const lines = block.trim().split('\n');
-    
+
     for (const line of lines) {
       const match = line.match(/^(\w+):\s*(.+)$/);
       if (match) {
@@ -729,19 +797,19 @@ function parseConcerts(md) {
         else if (key === 'link' || key === 'odkaz') concert.link = val;
       }
     }
-    
+
     if (concert.date && concert.title) {
       concerts.push(concert);
     }
   }
-  
+
   concerts.sort((a, b) => a.date - b.date);
   return concerts;
 }
 
 function formatDate(d) {
   const days = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
-  const months = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 
+  const months = ['ledna', 'února', 'března', 'dubna', 'května', 'června',
                   'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
   return `${days[d.getDay()]} ${d.getDate()}. ${months[d.getMonth()]} ${d.getFullYear()}`;
 }

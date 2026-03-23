@@ -1,0 +1,260 @@
+/* concerts.css — page-specific styles (base.css loaded first) */
+
+@keyframes growIn { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+
+/* Page content */
+.page {
+  position: relative;
+  z-index: 5;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px 160px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--acid-cyan);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.3s, transform 0.3s, color 0.3s;
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.back-link:hover {
+  opacity: 1;
+  transform: translateX(-5px);
+  color: var(--acid-pink);
+}
+
+/* Page title */
+.page-title {
+  font-family: 'Indie Flower', cursive;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-weight: 700;
+  color: var(--spore);
+  text-align: center;
+  margin-bottom: 10px;
+  animation: fadeInUp 1s ease-out, color-cycle 8s ease-in-out infinite;
+  text-shadow: 0 0 40px rgba(255, 110, 240, 0.3), 0 0 80px rgba(0, 255, 224, 0.15);
+}
+
+.page-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: rgba(184, 224, 144, 0.5);
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInUp 1.2s ease-out;
+}
+
+/* Concert card */
+.concert-card {
+  position: relative;
+  padding: 30px 35px;
+  margin-bottom: 35px;
+  transition: transform 0.3s;
+  animation: fadeInUp 1s ease-out;
+  animation-fill-mode: backwards;
+  transform-origin: bottom center;
+}
+
+.concert-card:hover {
+  transform: scale(1.02);
+}
+
+.concert-card-border {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid rgba(184, 224, 144, 0.25);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morphBlob 8s ease-in-out infinite;
+  pointer-events: none;
+  transition: border-color 0.3s;
+}
+
+.concert-card:hover .concert-card-border {
+  border-color: rgba(255, 110, 240, 0.4);
+}
+
+.concert-card.past {
+  opacity: 0.35;
+}
+
+.concert-card.past:hover {
+  opacity: 0.5;
+}
+
+.concert-card.next .concert-card-border {
+  border-color: rgba(0, 255, 224, 0.35);
+  animation: morphBlob 6s ease-in-out infinite;
+}
+
+.next-badge {
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--acid-cyan);
+  border: 1px solid rgba(0, 255, 224, 0.3);
+  padding: 2px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.card-date {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  font-weight: 700;
+  color: var(--spore);
+  margin-bottom: 4px;
+}
+
+.card-title {
+  font-family: 'Indie Flower', cursive;
+  font-size: clamp(1.7rem, 4.5vw, 2.3rem);
+  font-weight: 700;
+  color: var(--lichen);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.card-venue {
+  font-family: 'Pangolin', cursive;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(184, 224, 144, 0.6);
+  margin-bottom: 4px;
+}
+
+.card-meta {
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(184, 224, 144, 0.5);
+  margin-top: 10px;
+}
+
+.card-meta span {
+  margin-right: 15px;
+}
+
+.card-bands {
+  font-family: 'Pangolin', cursive;
+  font-size: 1rem;
+  color: rgba(255, 110, 240, 0.5);
+  margin-top: 6px;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--acid-cyan);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.3s, color 0.3s;
+}
+
+.card-link:hover { opacity: 1; color: var(--acid-pink); }
+
+/* Decorative dividers between cards */
+.card-divider {
+  text-align: center;
+  margin: 10px 0;
+  opacity: 0.3;
+}
+
+.card-divider svg {
+  animation: wobble 6s ease-in-out infinite;
+}
+
+/* Section labels */
+.section-label {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(184, 224, 144, 0.4);
+  text-transform: lowercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  margin-top: 40px;
+  text-align: center;
+  animation: fadeInUp 1.2s ease-out;
+}
+
+/* Decorative vine between sections */
+.section-vine {
+  text-align: center;
+  margin: 30px 0;
+  opacity: 0.35;
+}
+
+.section-vine svg {
+  animation: trippy-drift 10s ease-in-out infinite, hueRotate 12s linear infinite;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  animation: fadeInUp 1.2s ease-out;
+}
+
+.empty-state p {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  color: rgba(184, 224, 144, 0.5);
+}
+
+/* Bottom mushroom */
+.mushroom-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.mushroom-footer svg {
+  animation: hueRotate 20s linear infinite;
+}
+
+/* Footer credit */
+.footer-credit {
+  text-align: center;
+  margin-top: 60px;
+  padding-bottom: 20px;
+  animation: fadeInUp 2s ease-out;
+}
+
+.footer-credit p {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: rgba(184, 224, 144, 0.3);
+}
+
+.footer-credit a {
+  color: rgba(184, 224, 144, 0.4);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-credit a:hover {
+  color: var(--acid-cyan);
+}
+
+@media (max-width: 600px) {
+  .concert-card { padding: 22px 20px; }
+  .page { padding: 30px 15px 140px; }
+}
