@@ -1,0 +1,374 @@
+/* index.css — page-specific styles (base.css loaded first) */
+
+@keyframes swayReverse {
+  0%, 100% { transform: rotate(3deg); }
+  50% { transform: rotate(-3deg); }
+}
+@keyframes grow {
+  0% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+@keyframes drip {
+  0% { transform: translateY(-10px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+@keyframes spiralSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes eyeOpen {
+  0%, 40%, 100% { transform: scaleY(1); }
+  45%, 55% { transform: scaleY(0.1); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+}
+
+/* === SVG DECORATIONS === */
+.vine-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vine-left {
+  left: -20px;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  animation: sway 8s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.vine-right {
+  right: -20px;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  animation: swayReverse 9s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+/* === MAIN CONTENT === */
+.main-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* === LOGO === */
+.logo-wrapper {
+  margin-top: 60px;
+  margin-bottom: 20px;
+  animation: fadeInUp 1.5s ease-out, breathe 6s ease-in-out infinite;
+  position: relative;
+}
+
+.logo-wrapper img {
+  max-width: min(500px, 85vw);
+  height: auto;
+  filter: brightness(1.15) contrast(1.05) saturate(1.1);
+}
+
+.logo-glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse, rgba(255, 110, 240, 0.12) 0%, rgba(0, 255, 224, 0.06) 50%, transparent 70%);
+  z-index: -1;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* === TAGLINE === */
+.tagline {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+  font-weight: 700;
+  color: rgba(184, 224, 144, 0.55);
+  letter-spacing: 3px;
+  margin-bottom: 60px;
+  animation: fadeInUp 1.8s ease-out;
+  text-transform: lowercase;
+}
+
+/* === NEXT CONCERT BLOCK === */
+.next-concert {
+  animation: fadeInUp 2s ease-out;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  padding: 40px 50px;
+  position: relative;
+  transition: transform 0.3s ease;
+  max-width: 600px;
+}
+
+.next-concert:hover {
+  transform: scale(1.03);
+}
+
+.next-concert:hover .concert-border {
+  animation: morphBlob 4s ease-in-out infinite, hueRotate 6s linear infinite;
+  border-color: var(--acid-pink);
+  opacity: 1;
+}
+
+.concert-border {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--acid-cyan);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morphBlob 8s ease-in-out infinite;
+  opacity: 0.4;
+  transition: opacity 0.3s, border-color 0.3s;
+}
+
+.concert-label {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.05rem, 2.8vw, 1.3rem);
+  font-weight: 700;
+  color: var(--acid-cyan);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.concert-title {
+  font-family: 'Indie Flower', cursive;
+  font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+  font-weight: 700;
+  color: var(--spore);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  text-shadow: 0 0 30px rgba(255, 110, 240, 0.25), 0 0 60px rgba(0, 255, 224, 0.1);
+}
+
+.concert-date {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.5rem, 4.5vw, 2.3rem);
+  font-weight: 700;
+  color: var(--lichen);
+  margin-bottom: 6px;
+}
+
+.concert-venue {
+  font-family: 'Pangolin', cursive;
+  font-size: clamp(1.05rem, 2.8vw, 1.3rem);
+  font-weight: 600;
+  color: rgba(184, 224, 144, 0.6);
+}
+
+.concert-cta {
+  margin-top: 20px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--acid-pink);
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.next-concert:hover .concert-cta {
+  opacity: 1;
+}
+
+/* === BOTTOM MUSHROOM GARDEN === */
+.mushroom-garden {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.mushroom-garden > svg {
+  animation: hueRotate 20s linear infinite;
+}
+
+/* === NAVIGATION === */
+.nav-links {
+  margin-top: 80px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeInUp 2.5s ease-out;
+}
+
+.nav-links a {
+  font-family: 'Indie Flower', cursive;
+  font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+  font-weight: 700;
+  color: var(--lichen);
+  text-decoration: none;
+  position: relative;
+  padding: 8px 16px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.nav-links a::after {
+  content: '~';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  color: var(--acid-pink);
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--acid-cyan);
+  transform: translateY(-3px);
+}
+
+.nav-links a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* === DRIPPING === */
+.drip {
+  position: fixed;
+  width: 3px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0.35;
+  animation: drip 6s linear infinite;
+  z-index: 1;
+}
+
+/* === HALLUCINATION LAYER === */
+.hallucinations {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.halluc {
+  position: absolute;
+  pointer-events: none;
+}
+
+.halluc-blob {
+  animation: trippy-drift 18s ease-in-out infinite reverse;
+}
+
+.halluc-geometry {
+  animation: trippy-drift 22s ease-in-out infinite;
+}
+
+.halluc-ripple {
+  animation: trippy-drift 16s ease-in-out infinite reverse;
+}
+
+.halluc-infinity {
+  animation: trippy-drift 24s ease-in-out infinite, hueRotate 20s linear infinite;
+}
+
+.halluc-spiro {
+  animation: trippy-drift 15s ease-in-out infinite reverse, hueRotate 18s linear infinite;
+}
+
+.halluc-hex {
+  animation: trippy-drift 19s ease-in-out infinite;
+}
+
+.halluc-dna {
+  animation: hueRotate 15s linear infinite;
+}
+
+.halluc-amoeba {
+  animation: trippy-drift 25s ease-in-out infinite reverse, hueRotate 22s linear infinite;
+}
+
+.halluc-diamonds {
+  animation: trippy-drift 17s ease-in-out infinite, hueRotate 30s linear infinite;
+}
+
+/* === SPIRAL EYES === */
+.third-eye {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.18;
+}
+
+.third-eye svg {
+  animation: spiralSpin 15s linear infinite;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .vine-left, .vine-right { width: 100px; }
+  .main-content { padding: 20px 15px; }
+  .logo-wrapper { margin-top: 40px; }
+  .next-concert { padding: 30px 25px; }
+  .nav-links { gap: 15px; }
+  .halluc-dna, .halluc-diamonds, .halluc-spiro, .halluc-infinity { display: none; }
+  .halluc-geometry { width: 150px !important; }
+  .halluc-amoeba { width: 140px !important; }
+  .halluc-blob { width: 120px !important; }
+  .halluc-ripple { width: 160px !important; }
+  .halluc-hex { width: 100px !important; }
+}
+
+/* === LOADING === */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-eye {
+  width: 60px;
+  height: 60px;
+  animation: spiralSpin 2s linear infinite;
+}
+
+/* Footer */
+.footer-zone {
+  margin-top: 100px;
+  padding-bottom: 140px;
+  text-align: center;
+  animation: fadeInUp 3s ease-out;
+}
+
+.footer-zone p {
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: rgba(184, 224, 144, 0.35);
+}
+
+/* scroll hint */
+.scroll-hint {
+  margin-top: 40px;
+  animation: float 4s ease-in-out infinite;
+  opacity: 0.3;
+}
