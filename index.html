@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt Hůrka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pangolin&family=Silkscreen&family=Caveat:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
+<style>
+:root {
+  --moss: #4a6b3a;
+  --deep-forest: #1a2e12;
+  --mushroom: #c44b4f;
+  --fairy-gold: #d4a843;
+  --lichen: #8fb36a;
+  --night-purple: #2d1b4e;
+  --spore: #e8c86a;
+  --bg: #0d1a08;
+  --mist: rgba(141, 179, 106, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes swayReverse {
+  0%, 100% { transform: rotate(3deg); }
+  50% { transform: rotate(-3deg); }
+}
+@keyframes grow {
+  0% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-15px) rotate(2deg); }
+  66% { transform: translateY(-8px) rotate(-1deg); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes psychSwirl {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes drip {
+  0% { transform: translateY(-10px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+@keyframes spiralSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes eyeOpen {
+  0%, 40%, 100% { transform: scaleY(1); }
+  45%, 55% { transform: scaleY(0.1); }
+}
+@keyframes morphBlob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+  75% { border-radius: 60% 30% 50% 40% / 60% 40% 60% 30%; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--lichen);
+  font-family: 'Pangolin', cursive;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* === BACKGROUND LAYERS === */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-gradient {
+  background: 
+    radial-gradient(ellipse at 20% 80%, rgba(74, 107, 58, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(45, 27, 78, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, rgba(196, 75, 79, 0.05) 0%, transparent 40%),
+    linear-gradient(180deg, #0d1a08 0%, #121f0d 50%, #0a1506 100%);
+}
+
+.fireflies {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.firefly {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--spore);
+  box-shadow: 0 0 8px 3px rgba(232, 200, 106, 0.6), 0 0 20px 6px rgba(232, 200, 106, 0.2);
+  animation: pulse 3s ease-in-out infinite, float 8s ease-in-out infinite;
+}
+
+/* === SVG DECORATIONS === */
+.vine-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vine-left {
+  left: -20px;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  animation: sway 8s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.vine-right {
+  right: -20px;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  animation: swayReverse 9s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+/* === MAIN CONTENT === */
+.main-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* === LOGO === */
+.logo-wrapper {
+  margin-top: 60px;
+  margin-bottom: 20px;
+  animation: fadeInUp 1.5s ease-out, breathe 6s ease-in-out infinite;
+  position: relative;
+}
+
+.logo-wrapper img {
+  max-width: min(500px, 85vw);
+  height: auto;
+  filter: brightness(1.1) contrast(1.05);
+  /* tint the logo to match the green theme */
+}
+
+.logo-glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse, rgba(143, 179, 106, 0.15) 0%, transparent 70%);
+  z-index: -1;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* === TAGLINE === */
+.tagline {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: rgba(143, 179, 106, 0.5);
+  letter-spacing: 3px;
+  margin-bottom: 60px;
+  animation: fadeInUp 1.8s ease-out;
+  text-transform: lowercase;
+}
+
+/* === NEXT CONCERT BLOCK === */
+.next-concert {
+  animation: fadeInUp 2s ease-out;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  padding: 40px 50px;
+  position: relative;
+  transition: transform 0.3s ease;
+  max-width: 600px;
+}
+
+.next-concert:hover {
+  transform: scale(1.03);
+}
+
+.next-concert:hover .concert-border {
+  animation: morphBlob 4s ease-in-out infinite, psychSwirl 6s linear infinite;
+}
+
+.concert-border {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--lichen);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morphBlob 8s ease-in-out infinite;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.next-concert:hover .concert-border {
+  opacity: 1;
+}
+
+.concert-label {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: var(--fairy-gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.concert-title {
+  font-family: 'Indie Flower', cursive;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--spore);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  text-shadow: 0 0 30px rgba(232, 200, 106, 0.3);
+}
+
+.concert-date {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  color: var(--lichen);
+  margin-bottom: 6px;
+}
+
+.concert-venue {
+  font-family: 'Pangolin', cursive;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: rgba(143, 179, 106, 0.6);
+}
+
+.concert-cta {
+  margin-top: 20px;
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--mushroom);
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.next-concert:hover .concert-cta {
+  opacity: 1;
+}
+
+/* === BOTTOM MUSHROOM GARDEN === */
+.mushroom-garden {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* === NAVIGATION === */
+.nav-links {
+  margin-top: 80px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeInUp 2.5s ease-out;
+}
+
+.nav-links a {
+  font-family: 'Indie Flower', cursive;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  color: var(--lichen);
+  text-decoration: none;
+  position: relative;
+  padding: 8px 16px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.nav-links a::after {
+  content: '~';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  color: var(--fairy-gold);
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--spore);
+  transform: translateY(-3px);
+}
+
+.nav-links a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* === DRIPPING === */
+.drip {
+  position: fixed;
+  width: 3px;
+  height: 20px;
+  background: linear-gradient(to bottom, transparent, var(--lichen), transparent);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: drip 6s linear infinite;
+  z-index: 1;
+}
+
+/* === SPIRAL EYES === */
+.third-eye {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.12;
+}
+
+.third-eye svg {
+  animation: spiralSpin 20s linear infinite;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .vine-left, .vine-right { width: 100px; }
+  .main-content { padding: 20px 15px; }
+  .logo-wrapper { margin-top: 40px; }
+  .next-concert { padding: 30px 25px; }
+  .nav-links { gap: 15px; }
+}
+
+/* === LOADING === */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-eye {
+  width: 60px;
+  height: 60px;
+  animation: spiralSpin 2s linear infinite;
+}
+
+/* Footer */
+.footer-zone {
+  margin-top: 100px;
+  padding-bottom: 140px;
+  text-align: center;
+  animation: fadeInUp 3s ease-out;
+}
+
+.footer-zone p {
+  font-family: 'Caveat', cursive;
+  font-size: 0.9rem;
+  color: rgba(143, 179, 106, 0.3);
+}
+
+/* scroll hint */
+.scroll-hint {
+  margin-top: 40px;
+  animation: float 4s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div class="page-loader" id="loader">
+  <svg class="loader-eye" viewBox="0 0 60 60">
+    <circle cx="30" cy="30" r="28" fill="none" stroke="#8fb36a" stroke-width="1" opacity="0.5"/>
+    <path d="M30 2 A28 28 0 0 1 58 30" fill="none" stroke="#d4a843" stroke-width="2"/>
+    <circle cx="30" cy="30" r="8" fill="#4a6b3a" opacity="0.6"/>
+    <circle cx="30" cy="30" r="3" fill="#d4a843"/>
+  </svg>
+</div>
+
+<!-- Background layers -->
+<div class="bg-layer bg-gradient"></div>
+
+<!-- Fireflies -->
+<div class="fireflies" id="fireflies"></div>
+
+<!-- Drips -->
+<div id="drips"></div>
+
+<!-- Third eyes -->
+<div class="third-eye" style="top: 15%; left: 8%;">
+  <svg width="50" height="50" viewBox="0 0 50 50">
+    <path d="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" fill="none" stroke="#8fb36a" stroke-width="0.8"/>
+    <circle cx="25" cy="25" r="6" fill="none" stroke="#d4a843" stroke-width="0.5"/>
+    <circle cx="25" cy="25" r="2" fill="#d4a843" opacity="0.4"/>
+  </svg>
+</div>
+
+<div class="third-eye" style="bottom: 25%; right: 6%;">
+  <svg width="70" height="70" viewBox="0 0 50 50" style="animation-direction: reverse;">
+    <path d="M25 5 Q35 15 45 25 Q35 35 25 45 Q15 35 5 25 Q15 15 25 5Z" fill="none" stroke="#c44b4f" stroke-width="0.6"/>
+    <circle cx="25" cy="25" r="8" fill="none" stroke="#c44b4f" stroke-width="0.4"/>
+    <circle cx="25" cy="25" r="3" fill="#c44b4f" opacity="0.3"/>
+  </svg>
+</div>
+
+<!-- Vine SVGs -->
+<div class="vine-container vine-left">
+  <svg viewBox="0 0 200 1000" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <!-- Main vine -->
+    <path d="M100 0 Q80 100 120 200 Q140 300 80 400 Q40 500 110 600 Q150 700 70 800 Q30 900 100 1000" 
+          fill="none" stroke="#4a6b3a" stroke-width="3" opacity="0.6"/>
+    <!-- Secondary vine -->
+    <path d="M110 0 Q90 80 130 180 Q160 280 90 380 Q50 480 120 580 Q170 680 80 780 Q40 880 120 980" 
+          fill="none" stroke="#8fb36a" stroke-width="1.5" opacity="0.3"/>
+    <!-- Leaves -->
+    <g opacity="0.5">
+      <ellipse cx="120" cy="200" rx="25" ry="10" fill="#4a6b3a" transform="rotate(-30 120 200)"/>
+      <ellipse cx="80" cy="400" rx="20" ry="8" fill="#8fb36a" transform="rotate(20 80 400)"/>
+      <ellipse cx="110" cy="600" rx="22" ry="9" fill="#4a6b3a" transform="rotate(-15 110 600)"/>
+      <ellipse cx="70" cy="800" rx="18" ry="7" fill="#8fb36a" transform="rotate(25 70 800)"/>
+    </g>
+    <!-- Tiny flowers -->
+    <g opacity="0.6">
+      <circle cx="85" cy="150" r="4" fill="#c44b4f"/>
+      <circle cx="85" cy="150" r="7" fill="none" stroke="#c44b4f" stroke-width="0.5"/>
+      <circle cx="130" cy="350" r="3" fill="#d4a843"/>
+      <circle cx="130" cy="350" r="6" fill="none" stroke="#d4a843" stroke-width="0.5"/>
+      <circle cx="60" cy="550" r="5" fill="#c44b4f"/>
+      <circle cx="60" cy="550" r="9" fill="none" stroke="#c44b4f" stroke-width="0.5"/>
+      <circle cx="100" cy="750" r="3" fill="#d4a843"/>
+    </g>
+    <!-- Mushrooms -->
+    <g opacity="0.5" transform="translate(50, 480)">
+      <rect x="8" y="12" width="4" height="15" rx="2" fill="#e8c86a" opacity="0.6"/>
+      <ellipse cx="10" cy="12" rx="12" ry="8" fill="#c44b4f"/>
+      <circle cx="6" cy="10" r="1.5" fill="#fff" opacity="0.5"/>
+      <circle cx="13" cy="8" r="1" fill="#fff" opacity="0.5"/>
+    </g>
+    <!-- Spiral tendril -->
+    <path d="M90 300 Q100 290 105 300 Q110 310 100 315 Q90 320 85 310 Q80 300 90 295" 
+          fill="none" stroke="#8fb36a" stroke-width="1" opacity="0.4"/>
+    <!-- Fern fronds -->
+    <g opacity="0.35" transform="translate(60,650)">
+      <path d="M0 40 Q10 30 5 20 Q0 10 10 0" fill="none" stroke="#4a6b3a" stroke-width="1.5"/>
+      <path d="M5 35 L15 28" fill="none" stroke="#4a6b3a" stroke-width="0.8"/>
+      <path d="M3 25 L-8 20" fill="none" stroke="#4a6b3a" stroke-width="0.8"/>
+      <path d="M7 15 L18 10" fill="none" stroke="#4a6b3a" stroke-width="0.8"/>
+    </g>
+  </svg>
+</div>
+
+<div class="vine-container vine-right">
+  <svg viewBox="0 0 200 1000" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <path d="M100 0 Q130 120 70 220 Q40 320 120 420 Q160 520 80 620 Q30 720 130 820 Q170 920 90 1000" 
+          fill="none" stroke="#4a6b3a" stroke-width="3" opacity="0.6"/>
+    <path d="M90 0 Q120 100 60 200 Q30 300 110 400 Q150 500 70 600 Q20 700 120 800 Q160 900 80 980" 
+          fill="none" stroke="#8fb36a" stroke-width="1.5" opacity="0.3"/>
+    <g opacity="0.5">
+      <ellipse cx="70" cy="220" rx="25" ry="10" fill="#4a6b3a" transform="rotate(30 70 220)"/>
+      <ellipse cx="120" cy="420" rx="20" ry="8" fill="#8fb36a" transform="rotate(-20 120 420)"/>
+      <ellipse cx="80" cy="620" rx="22" ry="9" fill="#4a6b3a" transform="rotate(15 80 620)"/>
+      <ellipse cx="130" cy="820" rx="18" ry="7" fill="#8fb36a" transform="rotate(-25 130 820)"/>
+    </g>
+    <g opacity="0.6">
+      <circle cx="115" cy="170" r="4" fill="#d4a843"/>
+      <circle cx="50" cy="370" r="5" fill="#c44b4f"/>
+      <circle cx="50" cy="370" r="9" fill="none" stroke="#c44b4f" stroke-width="0.5"/>
+      <circle cx="140" cy="570" r="3" fill="#d4a843"/>
+      <circle cx="90" cy="770" r="4" fill="#c44b4f"/>
+    </g>
+    <!-- Mushroom cluster -->
+    <g opacity="0.5" transform="translate(120, 680)">
+      <rect x="6" y="10" width="3" height="12" rx="1.5" fill="#e8c86a" opacity="0.6"/>
+      <ellipse cx="7.5" cy="10" rx="10" ry="7" fill="#c44b4f"/>
+      <circle cx="4" cy="8" r="1" fill="#fff" opacity="0.5"/>
+      <circle cx="10" cy="7" r="1.5" fill="#fff" opacity="0.5"/>
+    </g>
+    <g opacity="0.4" transform="translate(135, 695)">
+      <rect x="4" y="8" width="2.5" height="10" rx="1" fill="#e8c86a" opacity="0.6"/>
+      <ellipse cx="5" cy="8" rx="7" ry="5" fill="#c44b4f" opacity="0.8"/>
+    </g>
+    <!-- Eye on vine -->
+    <g opacity="0.25" transform="translate(85, 500)">
+      <ellipse cx="12" cy="8" rx="12" ry="8" fill="none" stroke="#d4a843" stroke-width="1"/>
+      <circle cx="12" cy="8" r="4" fill="#d4a843" opacity="0.4"/>
+      <circle cx="12" cy="8" r="1.5" fill="#1a2e12"/>
+    </g>
+  </svg>
+</div>
+
+<!-- Bottom mushroom garden -->
+<div class="mushroom-garden">
+  <svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;bottom:0">
+    <!-- Ground -->
+    <path d="M0 80 Q100 60 200 75 Q350 85 500 70 Q650 55 800 78 Q950 90 1100 65 L1200 75 L1200 120 L0 120Z" 
+          fill="#1a2e12" opacity="0.8"/>
+    <path d="M0 90 Q150 80 300 88 Q450 95 600 82 Q750 70 900 88 Q1050 100 1200 85 L1200 120 L0 120Z" 
+          fill="#0d1a08"/>
+    <!-- Mushrooms -->
+    <g transform="translate(100, 50)">
+      <rect x="13" y="15" width="5" height="25" rx="2.5" fill="#8fb36a" opacity="0.5"/>
+      <ellipse cx="15.5" cy="15" rx="18" ry="13" fill="#c44b4f" opacity="0.7"/>
+      <circle cx="10" cy="12" r="2" fill="#fff" opacity="0.4"/>
+      <circle cx="20" cy="9" r="1.5" fill="#fff" opacity="0.4"/>
+      <circle cx="14" cy="7" r="1" fill="#fff" opacity="0.3"/>
+    </g>
+    <g transform="translate(130, 58)">
+      <rect x="8" y="10" width="4" height="18" rx="2" fill="#8fb36a" opacity="0.4"/>
+      <ellipse cx="10" cy="10" rx="13" ry="9" fill="#d4a843" opacity="0.5"/>
+    </g>
+    <g transform="translate(400, 42)">
+      <rect x="10" y="12" width="4" height="22" rx="2" fill="#8fb36a" opacity="0.5"/>
+      <ellipse cx="12" cy="12" rx="15" ry="11" fill="#c44b4f" opacity="0.6"/>
+      <circle cx="8" cy="9" r="1.5" fill="#fff" opacity="0.4"/>
+      <circle cx="16" cy="7" r="2" fill="#fff" opacity="0.3"/>
+    </g>
+    <g transform="translate(700, 48)">
+      <rect x="12" y="14" width="5" height="20" rx="2.5" fill="#8fb36a" opacity="0.5"/>
+      <ellipse cx="14.5" cy="14" rx="17" ry="12" fill="#c44b4f" opacity="0.7"/>
+      <circle cx="9" cy="11" r="1.5" fill="#fff" opacity="0.4"/>
+      <circle cx="18" cy="8" r="2" fill="#fff" opacity="0.3"/>
+    </g>
+    <g transform="translate(730, 56)">
+      <rect x="6" y="8" width="3" height="14" rx="1.5" fill="#8fb36a" opacity="0.4"/>
+      <ellipse cx="7.5" cy="8" rx="10" ry="7" fill="#d4a843" opacity="0.4"/>
+    </g>
+    <g transform="translate(950, 38)">
+      <rect x="11" y="13" width="4" height="25" rx="2" fill="#8fb36a" opacity="0.5"/>
+      <ellipse cx="13" cy="13" rx="16" ry="11" fill="#c44b4f" opacity="0.6"/>
+      <circle cx="8" cy="10" r="2" fill="#fff" opacity="0.3"/>
+      <circle cx="17" cy="8" r="1.5" fill="#fff" opacity="0.4"/>
+    </g>
+    <!-- Grass tufts -->
+    <g stroke="#4a6b3a" fill="none" stroke-width="1.5" opacity="0.5">
+      <path d="M50 85 Q52 65 48 50"/><path d="M55 85 Q60 60 55 45"/><path d="M45 85 Q40 60 43 48"/>
+      <path d="M250 80 Q252 60 248 45"/><path d="M255 80 Q260 55 255 40"/>
+      <path d="M550 75 Q553 55 548 40"/><path d="M555 75 Q560 50 553 35"/>
+      <path d="M850 82 Q852 62 848 47"/><path d="M855 82 Q860 57 853 42"/>
+      <path d="M1100 78 Q1103 58 1098 43"/><path d="M1105 78 Q1110 53 1103 38"/>
+    </g>
+    <!-- Tiny flowers in grass -->
+    <g opacity="0.5">
+      <circle cx="260" cy="73" r="3" fill="#d4a843"/>
+      <circle cx="560" cy="68" r="2.5" fill="#c44b4f"/>
+      <circle cx="860" cy="75" r="3" fill="#d4a843"/>
+    </g>
+  </svg>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <!-- Decorative top SVG -->
+  <svg width="120" height="40" viewBox="0 0 120 40" style="opacity:0.3; margin-top:20px; animation: fadeInUp 1s ease-out;">
+    <path d="M10 20 Q30 5 60 20 Q90 35 110 20" fill="none" stroke="#8fb36a" stroke-width="1.5"/>
+    <circle cx="60" cy="20" r="3" fill="#d4a843"/>
+    <path d="M25 15 Q30 10 35 15" fill="none" stroke="#4a6b3a" stroke-width="1"/>
+    <path d="M85 15 Q90 10 95 15" fill="none" stroke="#4a6b3a" stroke-width="1"/>
+  </svg>
+
+  <!-- Logo -->
+  <div class="logo-wrapper">
+    <div class="logo-glow"></div>
+    <img src="logo.png" alt="Projekt Hůrka" id="logo">
+  </div>
+
+  <div class="tagline">~ z lesa mezi lidi ~</div>
+
+  <!-- Next concert -->
+  <a href="concerts.html" class="next-concert" id="nextConcert">
+    <div class="concert-border"></div>
+    <div class="concert-label">~ příští koncert ~</div>
+    <div class="concert-title" id="concertTitle">načítám...</div>
+    <div class="concert-date" id="concertDate"></div>
+    <div class="concert-venue" id="concertVenue"></div>
+    <div class="concert-cta">klikni pro všechny koncerty →</div>
+  </a>
+
+  <!-- Decorative separator -->
+  <svg width="200" height="60" viewBox="0 0 200 60" style="opacity:0.2; margin: 40px 0; animation: fadeInUp 2.2s ease-out;">
+    <path d="M10 30 Q50 10 100 30 Q150 50 190 30" fill="none" stroke="#8fb36a" stroke-width="1"/>
+    <path d="M30 30 Q70 45 100 30 Q130 15 170 30" fill="none" stroke="#d4a843" stroke-width="0.8"/>
+    <circle cx="100" cy="30" r="5" fill="none" stroke="#c44b4f" stroke-width="0.8"/>
+    <circle cx="100" cy="30" r="2" fill="#c44b4f" opacity="0.5"/>
+    <!-- tiny mushroom -->
+    <g transform="translate(95, 10)">
+      <rect x="4" y="6" width="2" height="8" rx="1" fill="#8fb36a" opacity="0.5"/>
+      <ellipse cx="5" cy="6" rx="6" ry="4" fill="#c44b4f" opacity="0.5"/>
+    </g>
+  </svg>
+
+  <!-- Nav links -->
+  <nav class="nav-links">
+    <a href="concerts.html">koncerty</a>
+    <a href="https://www.instagram.com/projekthurka/" target="_blank">instagram</a>
+    <a href="https://open.spotify.com/" target="_blank">spotify</a>
+  </nav>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <svg width="30" height="40" viewBox="0 0 30 40" opacity="0.4">
+      <path d="M15 5 L15 30" stroke="#8fb36a" stroke-width="1.5" fill="none"/>
+      <path d="M8 23 L15 32 L22 23" stroke="#8fb36a" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="footer-zone">
+    <p>projekt hůrka © 2026</p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">rosteme z půdy</p>
+  </div>
+</div>
+
+<script>
+// === FIREFLIES ===
+const firefliesContainer = document.getElementById('fireflies');
+for (let i = 0; i < 25; i++) {
+  const ff = document.createElement('div');
+  ff.className = 'firefly';
+  ff.style.left = Math.random() * 100 + '%';
+  ff.style.top = Math.random() * 100 + '%';
+  ff.style.animationDelay = Math.random() * 5 + 's';
+  ff.style.animationDuration = (3 + Math.random() * 4) + 's, ' + (6 + Math.random() * 6) + 's';
+  ff.style.width = (2 + Math.random() * 4) + 'px';
+  ff.style.height = ff.style.width;
+  firefliesContainer.appendChild(ff);
+}
+
+// === DRIPS ===
+const dripsContainer = document.getElementById('drips');
+for (let i = 0; i < 8; i++) {
+  const drip = document.createElement('div');
+  drip.className = 'drip';
+  drip.style.left = (10 + Math.random() * 80) + '%';
+  drip.style.animationDelay = Math.random() * 8 + 's';
+  drip.style.animationDuration = (4 + Math.random() * 4) + 's';
+  dripsContainer.appendChild(drip);
+}
+
+// === LOADING ===
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 600);
+});
+
+// === CONCERT LOADING ===
+async function loadNextConcert() {
+  try {
+    const response = await fetch('concerts.md');
+    const text = await response.text();
+    const concerts = parseConcerts(text);
+    const now = new Date();
+    
+    const upcoming = concerts.filter(c => c.date >= now);
+    
+    if (upcoming.length > 0) {
+      const next = upcoming[0];
+      document.getElementById('concertTitle').textContent = next.title;
+      document.getElementById('concertDate').textContent = formatDate(next.date);
+      document.getElementById('concertVenue').textContent = next.venue + (next.city ? ', ' + next.city : '');
+    } else {
+      document.getElementById('concertTitle').textContent = 'žádné koncerty';
+      document.getElementById('concertDate').textContent = 'zatím...';
+      document.getElementById('concertVenue').textContent = 'ale něco se chystá';
+    }
+  } catch (e) {
+    document.getElementById('concertTitle').textContent = 'Křest alba';
+    document.getElementById('concertDate').textContent = '4. 4. 2026';
+    document.getElementById('concertVenue').textContent = 'Kamina Boat, Praha';
+  }
+}
+
+function parseConcerts(md) {
+  const concerts = [];
+  const blocks = md.split(/^---$/m).filter(b => b.trim());
+  
+  for (const block of blocks) {
+    const concert = {};
+    const lines = block.trim().split('\n');
+    
+    for (const line of lines) {
+      const match = line.match(/^(\w+):\s*(.+)$/);
+      if (match) {
+        const key = match[1].toLowerCase();
+        const val = match[2].trim();
+        if (key === 'date') concert.date = new Date(val);
+        else if (key === 'title' || key === 'název') concert.title = val;
+        else if (key === 'venue' || key === 'místo') concert.venue = val;
+        else if (key === 'city' || key === 'město') concert.city = val;
+        else if (key === 'price' || key === 'vstupné') concert.price = val;
+        else if (key === 'time' || key === 'čas') concert.time = val;
+        else if (key === 'bands' || key === 'kapely') concert.bands = val;
+        else if (key === 'link' || key === 'odkaz') concert.link = val;
+      }
+    }
+    
+    if (concert.date && concert.title) {
+      concerts.push(concert);
+    }
+  }
+  
+  concerts.sort((a, b) => a.date - b.date);
+  return concerts;
+}
+
+function formatDate(d) {
+  const days = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
+  const months = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 
+                  'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
+  return `${days[d.getDay()]} ${d.getDate()}. ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+loadNextConcert();
+</script>
+</body>
+</html>
