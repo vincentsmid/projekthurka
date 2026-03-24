@@ -307,14 +307,14 @@ body {
   .main-content { padding: 1vh 15px; }
   .logo-svg { width: min(320px, 80vw); max-height: 20vh; }
   .tagline { font-size: clamp(0.9rem, 3vw, 1.2rem); }
-  .next-concert { padding: 20px 18px; }
-  .concert-title { font-size: clamp(1.5rem, 5vw, 2.2rem); }
-  .concert-date { font-size: clamp(1.1rem, 3.5vw, 1.5rem); }
-  .concert-label { font-size: clamp(0.8rem, 2.5vw, 1rem); margin-bottom: 6px; }
-  .concert-venue { font-size: clamp(0.85rem, 2.5vw, 1.1rem); }
-  .concert-cta { font-size: 0.95rem; margin-top: 10px; }
-  .nav-links { gap: 10px; }
-  .nav-links a { font-size: clamp(1rem, 3vw, 1.3rem); padding: 5px 10px; }
+  .next-concert { padding: 24px 20px; }
+  .concert-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+  .concert-date { font-size: clamp(1.2rem, 4vw, 1.6rem); }
+  .concert-label { font-size: clamp(0.9rem, 3vw, 1.1rem); margin-bottom: 8px; }
+  .concert-venue { font-size: clamp(1rem, 3vw, 1.2rem); }
+  .concert-cta { font-size: 1.05rem; margin-top: 12px; }
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: clamp(1.1rem, 3.5vw, 1.4rem); padding: 8px 14px; }
   .mushroom-garden { height: 80px; }
   .decorative-top, .decorative-separator { display: none; }
   .scroll-hint { display: none; }
