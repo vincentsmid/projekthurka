@@ -67,7 +67,7 @@ body {
 
 /* === LOGO === */
 .logo-wrapper {
-  margin-bottom: 2vh;
+  margin-bottom: 10vh;
   animation: fadeInUp 1.5s ease-out, breathe 6s ease-in-out infinite;
   position: relative;
   will-change: transform;
