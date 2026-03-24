@@ -60,14 +60,14 @@ body {
   align-items: center;
   justify-content: center;
   height: 100dvh;
-  padding: 20px 20px;
+  padding: 2vh 20px;
   overflow: hidden;
+  gap: 1vh;
 }
 
 /* === LOGO === */
 .logo-wrapper {
-  margin-top: 2vh;
-  margin-bottom: 1vh;
+  margin-bottom: 2vh;
   animation: fadeInUp 1.5s ease-out, breathe 6s ease-in-out infinite;
   position: relative;
   will-change: transform;
@@ -82,7 +82,7 @@ body {
 
 .logo-svg {
   width: min(500px, 85vw);
-  height: auto;
+  max-height: 25vh;
   display: block;
 }
 
@@ -113,7 +113,6 @@ body {
   font-weight: 700;
   color: rgba(184, 224, 144, 0.55);
   letter-spacing: 3px;
-  margin-bottom: 3vh;
   animation: fadeInUp 1.8s ease-out;
   text-transform: lowercase;
 }
@@ -125,7 +124,7 @@ body {
   cursor: pointer;
   text-decoration: none;
   display: block;
-  padding: 3vh 40px;
+  padding: 2vh 40px;
   position: relative;
   transition: transform 0.3s ease;
   max-width: 600px;
@@ -214,7 +213,6 @@ body {
 
 /* === NAVIGATION === */
 .nav-links {
-  margin-top: 3vh;
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
@@ -306,17 +304,16 @@ body {
 /* === RESPONSIVE === */
 @media (max-width: 600px) {
   .vine-left, .vine-right { width: 80px; }
-  .main-content { padding: 10px 15px; }
-  .logo-wrapper { margin-top: 1vh; margin-bottom: 0.5vh; }
-  .logo-svg { width: min(320px, 80vw); }
-  .tagline { margin-bottom: 2vh; font-size: clamp(0.9rem, 3vw, 1.2rem); }
+  .main-content { padding: 1vh 15px; }
+  .logo-svg { width: min(320px, 80vw); max-height: 20vh; }
+  .tagline { font-size: clamp(0.9rem, 3vw, 1.2rem); }
   .next-concert { padding: 20px 18px; }
   .concert-title { font-size: clamp(1.5rem, 5vw, 2.2rem); }
   .concert-date { font-size: clamp(1.1rem, 3.5vw, 1.5rem); }
   .concert-label { font-size: clamp(0.8rem, 2.5vw, 1rem); margin-bottom: 6px; }
   .concert-venue { font-size: clamp(0.85rem, 2.5vw, 1.1rem); }
   .concert-cta { font-size: 0.95rem; margin-top: 10px; }
-  .nav-links { margin-top: 2vh; gap: 10px; }
+  .nav-links { gap: 10px; }
   .nav-links a { font-size: clamp(1rem, 3vw, 1.3rem); padding: 5px 10px; }
   .mushroom-garden { height: 80px; }
   .decorative-top, .decorative-separator { display: none; }
@@ -355,8 +352,7 @@ body {
 
 /* Footer */
 .footer-zone {
-  margin-top: 3vh;
-  padding-bottom: 2vh;
+  padding-bottom: 1vh;
   text-align: center;
   animation: fadeInUp 3s ease-out;
 }
@@ -369,7 +365,6 @@ body {
 }
 
 .footer-credit {
-  margin-top: 1vh;
   text-align: center;
 }
 
@@ -391,7 +386,6 @@ body {
 
 /* scroll hint */
 .scroll-hint {
-  margin-top: 2vh;
   animation: float 4s ease-in-out infinite;
   opacity: 0.3;
   will-change: transform;
