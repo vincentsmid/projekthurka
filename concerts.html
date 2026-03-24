@@ -28,106 +28,49 @@
   </div>
 </div>
 
-<!-- Bottom mushrooms — trippy -->
+<!-- Bottom mushrooms (static) -->
 <div class="mushroom-footer">
-  <svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;bottom:0">
+  <svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:100%;display:block">
     <defs>
       <linearGradient id="trippyGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" stop-color="#ff6ef0" stop-opacity="0.6"/>
         <stop offset="50%" stop-color="#00ffe0" stop-opacity="0.4"/>
         <stop offset="100%" stop-color="#ffaa30" stop-opacity="0.6"/>
       </linearGradient>
-      <linearGradient id="trippyGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#6a3db8" stop-opacity="0.7"/>
-        <stop offset="100%" stop-color="#2a1845" stop-opacity="0.9"/>
-      </linearGradient>
       <radialGradient id="mushroomGlow" cx="50%" cy="30%" r="60%">
         <stop offset="0%" stop-color="#ff6ef0" stop-opacity="0.5"/>
         <stop offset="100%" stop-color="#c44b4f" stop-opacity="0.3"/>
       </radialGradient>
-      <filter id="tripGlow">
-        <feGaussianBlur stdDeviation="2" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
     </defs>
     <path d="M0 70 Q200 55 400 68 Q600 80 800 60 Q1000 50 1200 65 L1200 100 L0 100Z" fill="#3a2560" opacity="0.7"/>
     <path d="M0 85 Q300 75 600 82 Q900 90 1200 80 L1200 100 L0 100Z" fill="#2a1845"/>
-    <!-- Mushroom 1 — warped -->
-    <g transform="translate(180, 38)" filter="url(#tripGlow)">
-      <rect x="7" y="12" width="5" height="20" rx="2.5" fill="#b8e090" opacity="0.5">
-        <animateTransform attributeName="transform" type="skewX" values="0;5;-3;0" dur="4s" repeatCount="indefinite"/>
-      </rect>
-      <ellipse cx="10" cy="11" rx="15" ry="10" fill="url(#mushroomGlow)">
-        <animate attributeName="rx" values="15;17;13;15" dur="5s" repeatCount="indefinite"/>
-        <animate attributeName="ry" values="10;8;12;10" dur="7s" repeatCount="indefinite"/>
-      </ellipse>
-      <circle cx="6" cy="8" r="2" fill="#00ffe0" opacity="0.4">
-        <animate attributeName="opacity" values="0.4;0.8;0.2;0.4" dur="3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="14" cy="6" r="1.5" fill="#ffaa30" opacity="0.3">
-        <animate attributeName="opacity" values="0.3;0.7;0.1;0.3" dur="4s" repeatCount="indefinite"/>
-      </circle>
+    <g transform="translate(180, 38)">
+      <rect x="7" y="12" width="5" height="20" rx="2.5" fill="#b8e090" opacity="0.5"/>
+      <ellipse cx="10" cy="11" rx="15" ry="10" fill="url(#mushroomGlow)"/>
+      <circle cx="6" cy="8" r="2" fill="#00ffe0" opacity="0.4"/>
+      <circle cx="14" cy="6" r="1.5" fill="#ffaa30" opacity="0.3"/>
     </g>
-    <!-- Mushroom 2 — big & pulsing -->
-    <g transform="translate(550, 30)" filter="url(#tripGlow)">
-      <rect x="10" y="14" width="6" height="25" rx="3" fill="#b8e090" opacity="0.5">
-        <animateTransform attributeName="transform" type="skewX" values="0;-4;6;0" dur="6s" repeatCount="indefinite"/>
-      </rect>
-      <ellipse cx="13" cy="13" rx="20" ry="13" fill="url(#mushroomGlow)">
-        <animate attributeName="rx" values="20;23;18;20" dur="4s" repeatCount="indefinite"/>
-        <animate attributeName="ry" values="13;10;15;13" dur="6s" repeatCount="indefinite"/>
-      </ellipse>
-      <circle cx="7" cy="9" r="2.5" fill="#ff6ef0" opacity="0.3">
-        <animate attributeName="r" values="2.5;3.5;2;2.5" dur="3.5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="18" cy="7" r="2" fill="#00ffe0" opacity="0.3">
-        <animate attributeName="r" values="2;3;1.5;2" dur="4.5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="12" cy="5" r="1.5" fill="#ffaa30" opacity="0.25">
-        <animate attributeName="opacity" values="0.25;0.6;0.1;0.25" dur="5s" repeatCount="indefinite"/>
-      </circle>
+    <g transform="translate(550, 30)">
+      <rect x="10" y="14" width="6" height="25" rx="3" fill="#b8e090" opacity="0.5"/>
+      <ellipse cx="13" cy="13" rx="20" ry="13" fill="url(#mushroomGlow)"/>
+      <circle cx="7" cy="9" r="2.5" fill="#ff6ef0" opacity="0.3"/>
+      <circle cx="18" cy="7" r="2" fill="#00ffe0" opacity="0.3"/>
+      <circle cx="12" cy="5" r="1.5" fill="#ffaa30" opacity="0.25"/>
     </g>
-    <!-- Mushroom 3 — golden wobbly -->
-    <g transform="translate(880, 36)" filter="url(#tripGlow)">
-      <rect x="7" y="10" width="4" height="18" rx="2" fill="#b8e090" opacity="0.5">
-        <animateTransform attributeName="transform" type="skewX" values="0;3;-5;0" dur="5s" repeatCount="indefinite"/>
-      </rect>
-      <ellipse cx="9" cy="10" rx="13" ry="9" fill="#ffaa30" opacity="0.35">
-        <animate attributeName="rx" values="13;15;11;13" dur="6s" repeatCount="indefinite"/>
-        <animate attributeName="ry" values="9;7;11;9" dur="4s" repeatCount="indefinite"/>
-      </ellipse>
-      <circle cx="5" cy="7" r="1.5" fill="#ff6ef0" opacity="0.3">
-        <animate attributeName="opacity" values="0.3;0.7;0.15;0.3" dur="3s" repeatCount="indefinite"/>
-      </circle>
+    <g transform="translate(880, 36)">
+      <rect x="7" y="10" width="4" height="18" rx="2" fill="#b8e090" opacity="0.5"/>
+      <ellipse cx="9" cy="10" rx="13" ry="9" fill="#ffaa30" opacity="0.35"/>
+      <circle cx="5" cy="7" r="1.5" fill="#ff6ef0" opacity="0.3"/>
     </g>
-    <!-- Trippy vines -->
     <g stroke="url(#trippyGrad1)" fill="none" stroke-width="1.5" opacity="0.5">
-      <path d="M340 68 Q345 48 338 32 Q334 20 340 10">
-        <animate attributeName="d" values="M340 68 Q345 48 338 32 Q334 20 340 10;M340 68 Q350 45 342 28 Q338 18 345 8;M340 68 Q345 48 338 32 Q334 20 340 10" dur="8s" repeatCount="indefinite"/>
-      </path>
-      <path d="M348 68 Q355 42 350 28 Q346 16 352 5">
-        <animate attributeName="d" values="M348 68 Q355 42 350 28 Q346 16 352 5;M348 68 Q360 38 353 22 Q350 14 356 3;M348 68 Q355 42 350 28 Q346 16 352 5" dur="7s" repeatCount="indefinite"/>
-      </path>
-      <path d="M780 60 Q784 40 778 25 Q774 14 780 5">
-        <animate attributeName="d" values="M780 60 Q784 40 778 25 Q774 14 780 5;M780 60 Q790 36 782 20 Q778 12 785 3;M780 60 Q784 40 778 25 Q774 14 780 5" dur="9s" repeatCount="indefinite"/>
-      </path>
+      <path d="M340 68 Q345 48 338 32 Q334 20 340 10"/>
+      <path d="M348 68 Q355 42 350 28 Q346 16 352 5"/>
+      <path d="M780 60 Q784 40 778 25 Q774 14 780 5"/>
     </g>
-    <!-- Floating spore particles -->
-    <circle cx="100" cy="55" r="1.5" fill="#ff6ef0" opacity="0.3">
-      <animate attributeName="cy" values="55;35;55" dur="6s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="6s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="450" cy="60" r="1" fill="#00ffe0" opacity="0.3">
-      <animate attributeName="cy" values="60;38;60" dur="8s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="8s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="700" cy="50" r="1.5" fill="#ffaa30" opacity="0.25">
-      <animate attributeName="cy" values="50;28;50" dur="7s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.25;0.6;0.25" dur="7s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="1050" cy="58" r="1" fill="#ff6ef0" opacity="0.3">
-      <animate attributeName="cy" values="58;40;58" dur="5s" repeatCount="indefinite"/>
-    </circle>
+    <circle cx="100" cy="45" r="1.5" fill="#ff6ef0" opacity="0.3"/>
+    <circle cx="450" cy="50" r="1" fill="#00ffe0" opacity="0.3"/>
+    <circle cx="700" cy="40" r="1.5" fill="#ffaa30" opacity="0.25"/>
+    <circle cx="1050" cy="48" r="1" fill="#ff6ef0" opacity="0.3"/>
   </svg>
 </div>
 
@@ -135,13 +78,13 @@
 // Fireflies — with color variety
 const ff = document.getElementById('fireflies');
 const fireflyColors = ['#ff6ef0', '#00ffe0', '#ffaa30', '#f5e080', '#b8e090'];
-for (let i = 0; i < 24; i++) {
+for (let i = 0; i < 12; i++) {
   const f = document.createElement('div');
   f.className = 'firefly';
   f.style.left = Math.random() * 100 + '%';
   f.style.top = Math.random() * 100 + '%';
   f.style.animationDelay = Math.random() * 5 + 's';
-  f.style.animationDuration = (3 + Math.random() * 4) + 's, ' + (6 + Math.random() * 6) + 's, ' + (3 + Math.random() * 3) + 's';
+  f.style.animationDuration = (4 + Math.random() * 4) + 's, ' + (8 + Math.random() * 6) + 's';
   f.style.background = fireflyColors[Math.floor(Math.random() * fireflyColors.length)];
   ff.appendChild(f);
 }
@@ -221,16 +164,9 @@ function renderConcerts(concerts) {
       if (i < upcoming.length - 1) {
         html += `<div class="card-divider">
           <svg width="60" height="30" viewBox="0 0 60 30">
-            <path d="M5 15 Q15 3 30 15 Q45 27 55 15" fill="none" stroke="#ff6ef0" stroke-width="1" opacity="0.5">
-              <animate attributeName="d" values="M5 15 Q15 3 30 15 Q45 27 55 15;M5 15 Q15 27 30 15 Q45 3 55 15;M5 15 Q15 3 30 15 Q45 27 55 15" dur="4s" repeatCount="indefinite"/>
-            </path>
-            <circle cx="30" cy="15" r="3" fill="none" stroke="#00ffe0" stroke-width="0.8" opacity="0.5">
-              <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.5;0.2;0.5" dur="3s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="30" cy="15" r="1.5" fill="#ffaa30" opacity="0.4">
-              <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
-            </circle>
+            <path d="M5 15 Q15 3 30 15 Q45 27 55 15" fill="none" stroke="#ff6ef0" stroke-width="1" opacity="0.5"/>
+            <circle cx="30" cy="15" r="3" fill="none" stroke="#00ffe0" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="30" cy="15" r="1.5" fill="#ffaa30" opacity="0.4"/>
           </svg>
         </div>`;
       }
@@ -238,21 +174,11 @@ function renderConcerts(concerts) {
   } else {
     html += `<div class="empty-state">
       <svg width="80" height="80" viewBox="0 0 80 80" style="opacity:0.4; margin-bottom:20px;">
-        <circle cx="40" cy="40" r="30" fill="none" stroke="#ff6ef0" stroke-width="1">
-          <animate attributeName="r" values="30;33;28;30" dur="5s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="40" cy="40" r="20" fill="none" stroke="#00ffe0" stroke-width="0.5" opacity="0.4">
-          <animate attributeName="r" values="20;24;18;20" dur="7s" repeatCount="indefinite"/>
-        </circle>
-        <path d="M25 48 Q40 40 55 48" fill="none" stroke="#b8e090" stroke-width="1.5">
-          <animate attributeName="d" values="M25 48 Q40 40 55 48;M25 48 Q40 36 55 48;M25 48 Q40 40 55 48" dur="4s" repeatCount="indefinite"/>
-        </path>
-        <circle cx="28" cy="32" r="3" fill="#ffaa30" opacity="0.5">
-          <animate attributeName="r" values="3;4;2;3" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="52" cy="32" r="3" fill="#ff6ef0" opacity="0.5">
-          <animate attributeName="r" values="3;2;4;3" dur="3.5s" repeatCount="indefinite"/>
-        </circle>
+        <circle cx="40" cy="40" r="30" fill="none" stroke="#ff6ef0" stroke-width="1"/>
+        <circle cx="40" cy="40" r="20" fill="none" stroke="#00ffe0" stroke-width="0.5" opacity="0.4"/>
+        <path d="M25 48 Q40 40 55 48" fill="none" stroke="#b8e090" stroke-width="1.5"/>
+        <circle cx="28" cy="32" r="3" fill="#ffaa30" opacity="0.5"/>
+        <circle cx="52" cy="32" r="3" fill="#ff6ef0" opacity="0.5"/>
       </svg>
       <p>zatím žádné koncerty v plánu</p>
       <p style="margin-top: 8px; font-size: 1rem;">ale něco roste...</p>
@@ -263,21 +189,11 @@ function renderConcerts(concerts) {
     html += `
       <div class="section-vine">
         <svg width="140" height="50" viewBox="0 0 140 50">
-          <path d="M10 25 Q35 5 70 25 Q105 45 130 25" fill="none" stroke="#6a3db8" stroke-width="1.5" opacity="0.6">
-            <animate attributeName="d" values="M10 25 Q35 5 70 25 Q105 45 130 25;M10 25 Q35 45 70 25 Q105 5 130 25;M10 25 Q35 5 70 25 Q105 45 130 25" dur="6s" repeatCount="indefinite"/>
-          </path>
-          <circle cx="70" cy="25" r="4" fill="none" stroke="#ff6ef0" stroke-width="0.8" opacity="0.4">
-            <animate attributeName="r" values="4;7;4" dur="4s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="70" cy="25" r="2" fill="#00ffe0" opacity="0.3">
-            <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="40" cy="15" r="1.5" fill="#ffaa30" opacity="0.3">
-            <animate attributeName="cy" values="15;10;15" dur="5s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="100" cy="35" r="1.5" fill="#ff6ef0" opacity="0.3">
-            <animate attributeName="cy" values="35;40;35" dur="4s" repeatCount="indefinite"/>
-          </circle>
+          <path d="M10 25 Q35 5 70 25 Q105 45 130 25" fill="none" stroke="#6a3db8" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="70" cy="25" r="4" fill="none" stroke="#ff6ef0" stroke-width="0.8" opacity="0.4"/>
+          <circle cx="70" cy="25" r="2" fill="#00ffe0" opacity="0.3"/>
+          <circle cx="40" cy="15" r="1.5" fill="#ffaa30" opacity="0.3"/>
+          <circle cx="100" cy="35" r="1.5" fill="#ff6ef0" opacity="0.3"/>
         </svg>
       </div>
       <div class="section-label">~ proběhlo ~</div>
@@ -315,6 +231,33 @@ function renderCard(concert, isNext, isPast, delay) {
 }
 
 loadConcerts();
+
+// === CURSOR TRAIL (lightweight pool) ===
+(function() {
+  const colors = ['#ff6ef0', '#00ffe0', '#ffaa30', '#f5e080'];
+  const pool = [];
+  const poolSize = 12;
+  let idx = 0;
+  let lastX = 0, lastY = 0;
+  for (let i = 0; i < poolSize; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'cursor-trail';
+    document.body.appendChild(dot);
+    pool.push(dot);
+  }
+  document.addEventListener('mousemove', function(e) {
+    const dx = e.clientX - lastX, dy = e.clientY - lastY;
+    if (dx * dx + dy * dy < 64) return;
+    lastX = e.clientX; lastY = e.clientY;
+    const dot = pool[idx % poolSize];
+    idx++;
+    dot.style.background = colors[idx % colors.length];
+    dot.style.left = e.clientX - 4 + 'px';
+    dot.style.top = e.clientY - 4 + 'px';
+    dot.style.opacity = '0.6';
+    setTimeout(function() { dot.style.opacity = '0'; }, 50);
+  });
+})();
 </script>
 </body>
 </html>
