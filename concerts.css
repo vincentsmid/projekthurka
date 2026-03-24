@@ -73,9 +73,10 @@
   inset: 0;
   border: 1.5px solid rgba(184, 224, 144, 0.25);
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  animation: morphBlob 8s ease-in-out infinite;
+  animation: morphBlob 10s ease-in-out infinite;
   pointer-events: none;
   transition: border-color 0.3s;
+  will-change: border-radius;
 }
 
 .concert-card:hover .concert-card-border {
@@ -199,7 +200,7 @@
 }
 
 .section-vine svg {
-  animation: trippy-drift 10s ease-in-out infinite, hueRotate 12s linear infinite;
+  animation: trippy-drift 10s ease-in-out infinite;
 }
 
 /* Empty state */
@@ -226,9 +227,7 @@
   z-index: 3;
 }
 
-.mushroom-footer svg {
-  animation: hueRotate 20s linear infinite;
-}
+.mushroom-footer svg {}
 
 /* Footer credit */
 .footer-credit {
