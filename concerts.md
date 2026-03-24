@@ -4,7 +4,7 @@ venue: Kulturní a kreativní centrum
 city: Fryšták
 time: 18:00
 price: 350 Kč
-bands: Projekt Hůrka, Černý Čaj, Čtvrt na smrt
+bands: Projekt Húrka, Černý Čaj, Čtvrt na smrt
 link: https://www.fairplay.events/cs/frystacky-jarni-slet-2026-2026-4fe2
 ---
 date: 2026-04-04
@@ -13,7 +13,7 @@ venue: Kamina Boat
 city: Praha
 time: 18:30
 price: 250 Kč
-bands: Wreckberries, Misakort, Projekt Hůrka
+bands: Wreckberries, Misakort, Projekt Húrka
 ---
 date: 2026-04-25
 title: Sklářské kouzlení
@@ -21,7 +21,7 @@ venue: Zámek Kinských
 city: Valašské Meziříčí
 time: 13:00
 price: TBD
-bands: Projekt Hůrka
+bands: Projekt Húrka
 ---
 date: 2026-04-27
 title: Koncert Moře kuřat
@@ -29,7 +29,7 @@ venue: Hudební klub Melodka
 city: Brno
 time: TBD
 price: TBD
-bands: Projekt Hůrka, Moře kuřat
+bands: Projekt Húrka, Moře kuřat
 ---
 date: 2026-05-23
 title: Festival Memento
@@ -37,4 +37,4 @@ venue: TBD
 city: Mentaurov
 time: TBD
 price: TBD
-bands: Projekt Hůrka a další
+bands: Projekt Húrka a další
