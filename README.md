@@ -1,6 +1,6 @@
-# Projekt Hůrka
+# Projekt Húrka
 
-Website for the indie band **Projekt Hůrka**.
+Website for the indie band **Projekt Húrka**.
 
 ## Adding concerts
 
