@@ -342,9 +342,9 @@
   <a href="concerts.html" class="next-concert" id="nextConcert">
     <div class="concert-border"></div>
     <div class="concert-label">~ příští koncert ~</div>
-    <div class="concert-title" id="concertTitle">Křest alba</div>
-    <div class="concert-date" id="concertDate">4. 4. 2026</div>
-    <div class="concert-venue" id="concertVenue">Kamina Boat, Praha</div>
+    <div class="concert-title" id="concertTitle">koncerty</div>
+    <div class="concert-date" id="concertDate"></div>
+    <div class="concert-venue" id="concertVenue">podívej se na seznam →</div>
     <div class="concert-cta">klikni pro všechny koncerty →</div>
   </a>
 
@@ -442,9 +442,9 @@ async function loadNextConcert() {
       document.getElementById('concertVenue').textContent = 'ale něco se chystá';
     }
   } catch (e) {
-    document.getElementById('concertTitle').textContent = 'Křest alba';
-    document.getElementById('concertDate').textContent = '4. 4. 2026';
-    document.getElementById('concertVenue').textContent = 'Kamina Boat, Praha';
+    document.getElementById('concertTitle').textContent = 'koncerty';
+    document.getElementById('concertDate').textContent = '';
+    document.getElementById('concertVenue').textContent = 'podívej se na seznam →';
   }
 }
 

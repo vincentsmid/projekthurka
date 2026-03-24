@@ -23,3 +23,13 @@ link: Optional URL for tickets
 - `date` and `title` are required, everything else is optional.
 - Concerts are automatically sorted by date.
 - Past concerts are filtered out on the homepage; the nearest upcoming one is shown.
+
+## Deployment
+
+The site is deployed via GitHub Pages. On every push to `main`, a GitHub Actions workflow runs `build.py` which reads `concerts.md` and injects the concert data into the HTML files, then deploys to Pages.
+
+To test the build locally:
+
+```
+python3 build.py
+```
