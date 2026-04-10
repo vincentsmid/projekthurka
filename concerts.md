@@ -9,7 +9,7 @@ link: https://www.fairplay.events/cs/frystacky-jarni-slet-2026-2026-4fe2
 ---
 date: 2026-04-04
 title: Křest alba Zpěv sirén
-venue: Kamina Boat
+venue: Kamina Boat Praha
 city: Praha
 time: 18:30
 price: 250 Kč
